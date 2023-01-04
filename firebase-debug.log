@@ -1,0 +1,118 @@
+[debug] [2023-01-03T18:39:09.176Z] ----------------------------------------------------------------------
+[debug] [2023-01-03T18:39:09.177Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\marti\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --project demo-project
+[debug] [2023-01-03T18:39:09.178Z] CLI Version:   11.18.0
+[debug] [2023-01-03T18:39:09.178Z] Platform:      win32
+[debug] [2023-01-03T18:39:09.178Z] Node Version:  v16.17.0
+[debug] [2023-01-03T18:39:09.178Z] Time:          Tue Jan 03 2023 10:39:09 GMT-0800 (Pacific Standard Time)
+[debug] [2023-01-03T18:39:09.179Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-01-03T18:39:09.236Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-03T18:39:09.237Z] > authorizing via signed-in user (martin.wooo@outlook.com)
+[debug] [2023-01-03T18:39:09.321Z] java version "19.0.1" 2022-10-18
+
+[debug] [2023-01-03T18:39:09.321Z] Java(TM) SE Runtime Environment (build 19.0.1+10-21)
+Java HotSpot(TM) 64-Bit Server VM (build 19.0.1+10-21, mixed mode, sharing)
+
+[debug] [2023-01-03T18:39:09.336Z] Parsed Java major version: 19
+[info] i  emulators: Starting emulators: auth, functions, firestore, database {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, database"}}
+[info] i  emulators: Detected demo project ID "demo-project", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail. {"metadata":{"emulator":{"name":"hub"},"message":"Detected demo project ID \"demo-project\", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail."}}
+[debug] [2023-01-03T18:39:09.352Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-03T18:39:09.352Z] assigned listening specs for emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[warn] !  emulators: It seems that you are running multiple instances of the emulator suite for project demo-project. This may result in unexpected behavior. 
+[debug] [2023-01-03T18:39:09.359Z] [hub] writing locator at C:\Users\marti\AppData\Local\Temp\hub-demo-project.json
+[debug] [2023-01-03T18:39:09.372Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-03T18:39:09.373Z] late-assigned ports for functions and eventarc emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"0.0.0.0","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[info] +  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
+[debug] [2023-01-03T18:39:09.394Z] defaultcredentials: writing to file C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json
+[debug] [2023-01-03T18:39:09.396Z] Setting GAC to C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\marti\\AppData\\Roaming\\firebase\\martin_wooo_outlook.com_application_default_credentials.json"}}
+[debug] [2023-01-03T18:39:09.405Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-01-03T18:39:09.405Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-01-03T18:39:09.405Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.15.1.jar","--host","0.0.0.0","--port",8080,"--websocket_port",9150,"--project_id","demo-project","--rules","C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.15.1.jar\",\"--host\",\"0.0.0.0\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"demo-project\",\"--rules\",\"C:\\\\Users\\\\marti\\\\OneDrive\\\\Desktop\\\\projects\\\\ReactNative\\\\old\\\\old\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-01-03T18:39:11.247Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/demo-project [none]
+[debug] [2023-01-03T18:39:11.503Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/demo-project 403
+[debug] [2023-01-03T18:39:11.503Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/demo-project {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-01-03T18:39:11.504Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-01-03T18:39:11.504Z] Failed to retrieve default database instance: {"name":"FirebaseError","children":[],"exit":2,"message":"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.","original":{"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}},"response":{"statusCode":403}},"exit":1,"message":"HTTP Error: 403, The caller does not have permission","status":403},"status":500} {"metadata":{"emulator":{"name":"database"},"message":"Failed to retrieve default database instance: {\"name\":\"FirebaseError\",\"children\":[],\"exit\":2,\"message\":\"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.\",\"original\":{\"name\":\"FirebaseError\",\"children\":[],\"context\":{\"body\":{\"error\":{\"code\":403,\"message\":\"The caller does not have permission\",\"status\":\"PERMISSION_DENIED\"}},\"response\":{\"statusCode\":403}},\"exit\":1,\"message\":\"HTTP Error: 403, The caller does not have permission\",\"status\":403},\"status\":500}"}}
+[debug] [2023-01-03T18:39:11.504Z] database rules config:  [{"instance":"demo-project-default-rtdb","rules":"C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\database.rules.json"}]
+[debug] [2023-01-03T18:39:11.516Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2023-01-03T18:39:11.516Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-01-03T18:39:11.516Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
+[debug] [2023-01-03T18:39:11.516Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\firebase-database-emulator-v4.11.0.jar","--host","0.0.0.0","--port",9000,"--single_project_mode","Warning","--functions_emulator_host","127.0.0.1","--functions_emulator_port",5001],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\firebase-database-emulator-v4.11.0.jar\",\"--host\",\"0.0.0.0\",\"--port\",9000,\"--single_project_mode\",\"Warning\",\"--functions_emulator_host\",\"127.0.0.1\",\"--functions_emulator_port\",5001],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  database: Database Emulator logging to database-debug.log {"metadata":{"emulator":{"name":"database"},"message":"Database Emulator logging to \u001b[1mdatabase-debug.log\u001b[22m"}}
+[debug] [2023-01-03T18:39:19.078Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-01-03T18:39:19.078Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-01-03T18:39:19.078Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\marti\\.cache\\firebase\\emulators\\ui-v1.11.1\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.1\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-01-03T18:39:19.202Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-01-03T18:39:19.203Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\functions\" for Cloud Functions..."}}
+[debug] [2023-01-03T18:39:19.354Z] Validating nodejs source
+[debug] [2023-01-03T18:39:21.956Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-01-03T18:39:21.957Z] Building nodejs source
+[debug] [2023-01-03T18:39:21.957Z] Analyzing nodejs backend spec
+[debug] [2023-01-03T18:39:21.965Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-01-03T18:39:22.489Z] Serving at port 9005
+
+[debug] [2023-01-03T18:39:22.846Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-01-03T18:39:22.852Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: . {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: ."}}
+[debug] [2023-01-03T18:39:22.864Z] >>> [apiv2][query] PUT http://127.0.0.1:9000/.settings/rules.json ns=demo-project-default-rtdb
+[debug] [2023-01-03T18:39:22.864Z] >>> [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json "{\n  \"rules\": {\n    \".read\": true,\n    \".write\": true\n  }\n}"
+[debug] [2023-01-03T18:39:23.291Z] <<< [apiv2][status] PUT http://127.0.0.1:9000/.settings/rules.json 200
+[debug] [2023-01-03T18:39:23.291Z] <<< [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json {"status":"ok"}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬──────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port    │ View in Emulator UI             │
+├────────────────┼──────────────┼─────────────────────────────────┤
+│ Authentication │ 0.0.0.0:9099 │ http://127.0.0.1:4000/auth      │
+├────────────────┼──────────────┼─────────────────────────────────┤
+│ Functions      │ 0.0.0.0:5001 │ http://127.0.0.1:4000/functions │
+├────────────────┼──────────────┼─────────────────────────────────┤
+│ Firestore      │ 0.0.0.0:8080 │ http://127.0.0.1:4000/firestore │
+├────────────────┼──────────────┼─────────────────────────────────┤
+│ Database       │ 0.0.0.0:9000 │ http://127.0.0.1:4000/database  │
+└────────────────┴──────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-01-03T18:40:09.688Z] >>> [apiv2][query] POST http://127.0.0.1:5001/functions/projects/demo-project/trigger_multicast [none]
+[debug] [2023-01-03T18:40:09.689Z] >>> [apiv2][body] POST http://127.0.0.1:5001/functions/projects/demo-project/trigger_multicast {"eventId":"c736cec8-cca0-40a1-83e6-98f8202fd6d0","eventType":"providers/firebase.auth/eventTypes/user.create","resource":{"name":"projects/demo-project","service":"firebaseauth.googleapis.com"},"params":{},"timestamp":"2023-01-03T18:40:09.688Z","data":{"uid":"9t2nUf1b6jpXCzD3lXFm5gpoBgO4","email":"test@test.com","emailVerified":false,"metadata":{"creationTime":"2023-01-03T18:40:09.687Z","lastSignInTime":"2023-01-03T18:40:09.687Z"},"customClaims":{},"providerData":[{"providerId":"password","email":"test@test.com","federatedId":"test@test.com","rawId":"test@test.com"}]}}
+[debug] [2023-01-03T18:40:09.694Z] <<< [apiv2][status] POST http://127.0.0.1:5001/functions/projects/demo-project/trigger_multicast 200
+[debug] [2023-01-03T18:40:09.694Z] <<< [apiv2][body] POST http://127.0.0.1:5001/functions/projects/demo-project/trigger_multicast {"status":"multicast_acknowledged"}
