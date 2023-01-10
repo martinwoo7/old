@@ -136,9 +136,13 @@ const GroupScreen = ({ navigation, route }) => {
         <SafeAreaView style={[styles.modalContainer, styles.AndroidSafeArea]} >
 
             <View style={[styles.topBar]}>
-                <MaterialIcons name="arrow-back" size={25} onPress={()=>{navigation.goBack()}} />
+                <TouchableOpacity style={{padding: 5}} onPress={()=>{navigation.goBack()}} >
+                    <MaterialIcons name="arrow-back" size={25} />
+                </TouchableOpacity>
                 <Text style={[styles.title, {paddingLeft: 5}]}>New Group</Text>
-                <MaterialIcons name="send" style={{marginLeft: 'auto'}} size={25} onPress={()=>{console.log("group list:", people)}} />
+                <TouchableOpacity style={{padding: 5, marginLeft: 'auto'}} onPress={()=>{console.log("group list:", people)}} >
+                    <MaterialIcons name="send" style={{}} size={25} />
+                </TouchableOpacity>
             </View>
 
             <View style={styles.name}>

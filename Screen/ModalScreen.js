@@ -62,7 +62,9 @@ const GroupModal = ({ navigation, route}) => {
         <SafeAreaView style={[styles.modalContainer, styles.AndroidSafeArea]} >
 
             <View style={[styles.topBar]}>
-                <MaterialIcons name="arrow-back" size={25} onPress={()=>{navigation.goBack()}} />
+                <TouchableOpacity style={{padding: 5}} onPress={()=>{navigation.goBack()}}>
+                    <MaterialIcons name="arrow-back" size={25} />
+                </TouchableOpacity>
                 <Text style={[styles.title, {paddingLeft: 5}]}>New Message</Text>
             </View>
 

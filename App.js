@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
   onAuthStateChanged,
 } from 'firebase/auth';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from './Screen/SplashScreen';
 import LoginScreen from './Screen/LoginScreen';
 import RegisterScreen from './Screen/RegisterScreen';
@@ -132,25 +132,6 @@ const Main = () => {
 };
 
 const App = () => {
-  // const [user, setUser]  = useState(null)
-
-  // const auth = emulators.authentication
-
-  // const asyncHandler = async (user) => {
-  //   const data = await user ? setUser(user) : setUser(null);
-  // }
-
-  // useEffect(() => {
-  //   // const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //   //     // user ? setUser(user) : setUser(null);
-  //   //      const temp = await testSetUser(user)
-  //   // });
-  //   const unsubscribe = onAuthStateChanged(auth, asyncHandler);
-  //   return () => {
-  //       unsubscribe();
-  //   }
-  // }, [])
-
   return (
     <NavigationContainer>
       <Stack.Navigator intialRouteName="SplashScreen">
