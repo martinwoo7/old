@@ -9,7 +9,7 @@ import emulators from "../firebase";
 
 // Returns:
 // Promise<void>
-export const createUser =  async ({ user }) => {
+export const createUser =  async (user) => {
     const db = emulators.firestore
 
     // const userRef = collection(db, "user")
@@ -20,7 +20,7 @@ export const createUser =  async ({ user }) => {
             email: user.email,
             groups: [],
             uid: user.uid,
-            photoURL: "https://randomuser.me/api/portraits/men/22.jpg",
+            photoURL: user.photoURL,
             registeredAt: serverTimestamp(),
 
         })
