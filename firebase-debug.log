@@ -1,65 +1,75 @@
-[debug] [2023-02-06T18:13:52.862Z] ----------------------------------------------------------------------
-[debug] [2023-02-06T18:13:52.863Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\marti\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --project demo-project --import=./export --export-on-exit=./export
-[debug] [2023-02-06T18:13:52.863Z] CLI Version:   11.18.0
-[debug] [2023-02-06T18:13:52.864Z] Platform:      win32
-[debug] [2023-02-06T18:13:52.864Z] Node Version:  v16.17.0
-[debug] [2023-02-06T18:13:52.864Z] Time:          Mon Feb 06 2023 10:13:52 GMT-0800 (Pacific Standard Time)
-[debug] [2023-02-06T18:13:52.864Z] ----------------------------------------------------------------------
+[debug] [2023-02-16T18:17:48.745Z] ----------------------------------------------------------------------
+[debug] [2023-02-16T18:17:48.748Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\marti\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --project demo-project --import=./export --export-on-exit=./export
+[debug] [2023-02-16T18:17:48.749Z] CLI Version:   11.23.1
+[debug] [2023-02-16T18:17:48.749Z] Platform:      win32
+[debug] [2023-02-16T18:17:48.749Z] Node Version:  v16.17.0
+[debug] [2023-02-16T18:17:48.750Z] Time:          Thu Feb 16 2023 10:17:48 GMT-0800 (Pacific Standard Time)
+[debug] [2023-02-16T18:17:48.751Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2023-02-06T18:13:52.931Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2023-02-06T18:13:52.931Z] > authorizing via signed-in user (martin.wooo@outlook.com)
-[debug] [2023-02-06T18:13:53.070Z] java version "19.0.1" 2022-10-18
+[debug] [2023-02-16T18:17:48.865Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-16T18:17:48.866Z] > authorizing via signed-in user (martin.wooo@outlook.com)
+[debug] [2023-02-16T18:17:49.127Z] java version "19.0.1" 2022-10-18
 
-[debug] [2023-02-06T18:13:53.070Z] Java(TM) SE Runtime Environment (build 19.0.1+10-21)
+[debug] [2023-02-16T18:17:49.128Z] Java(TM) SE Runtime Environment (build 19.0.1+10-21)
 Java HotSpot(TM) 64-Bit Server VM (build 19.0.1+10-21, mixed mode, sharing)
 
-[debug] [2023-02-06T18:13:53.090Z] Parsed Java major version: 19
+[debug] [2023-02-16T18:17:49.159Z] Parsed Java major version: 19
 [info] i  emulators: Starting emulators: auth, functions, firestore, database {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, database"}}
 [info] i  emulators: Detected demo project ID "demo-project", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail. {"metadata":{"emulator":{"name":"hub"},"message":"Detected demo project ID \"demo-project\", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail."}}
-[debug] [2023-02-06T18:13:53.106Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2023-02-06T18:13:53.107Z] assigned listening specs for emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
-[debug] [2023-02-06T18:13:53.112Z] [hub] writing locator at C:\Users\marti\AppData\Local\Temp\hub-demo-project.json
-[debug] [2023-02-06T18:13:53.122Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
-[debug] [2023-02-06T18:13:53.123Z] late-assigned ports for functions and eventarc emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"0.0.0.0","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
-[info] +  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
-[debug] [2023-02-06T18:13:53.155Z] defaultcredentials: writing to file C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json
-[debug] [2023-02-06T18:13:53.156Z] Setting GAC to C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\marti\\AppData\\Roaming\\firebase\\martin_wooo_outlook.com_application_default_credentials.json"}}
+[debug] [2023-02-16T18:17:49.185Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-02-16T18:17:49.185Z] assigned listening specs for emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-02-16T18:17:49.192Z] [hub] writing locator at C:\Users\marti\AppData\Local\Temp\hub-demo-project.json
+[debug] [2023-02-16T18:17:49.211Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-02-16T18:17:49.211Z] late-assigned ports for functions and eventarc emulators {"user":{"auth":[{"address":"0.0.0.0","family":"IPv4","port":9099}],"firestore":[{"address":"0.0.0.0","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"0.0.0.0","family":"IPv4","port":9150}],"database":[{"address":"0.0.0.0","family":"IPv4","port":9000}],"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"0.0.0.0","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[debug] [2023-02-16T18:17:49.216Z] defaultcredentials: writing to file C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json
+[debug] [2023-02-16T18:17:49.219Z] Setting GAC to C:\Users\marti\AppData\Roaming\firebase\martin_wooo_outlook.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\marti\\AppData\\Roaming\\firebase\\martin_wooo_outlook.com_application_default_credentials.json"}}
 [info] i  firestore: Importing data from C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\export\firestore_export\firestore_export.overall_export_metadata {"metadata":{"emulator":{"name":"firestore"},"message":"Importing data from C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\export\\firestore_export\\firestore_export.overall_export_metadata"}}
-[debug] [2023-02-06T18:13:53.168Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2023-02-06T18:13:53.168Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
-[debug] [2023-02-06T18:13:53.168Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.15.1.jar","--host","0.0.0.0","--port",8080,"--websocket_port",9150,"--project_id","demo-project","--seed_from_export","C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\export\\firestore_export\\firestore_export.overall_export_metadata","--rules","C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.15.1.jar\",\"--host\",\"0.0.0.0\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"demo-project\",\"--seed_from_export\",\"C:\\\\Users\\\\marti\\\\OneDrive\\\\Desktop\\\\projects\\\\ReactNative\\\\old\\\\old\\\\export\\\\firestore_export\\\\firestore_export.overall_export_metadata\",\"--rules\",\"C:\\\\Users\\\\marti\\\\OneDrive\\\\Desktop\\\\projects\\\\ReactNative\\\\old\\\\old\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: downloading cloud-firestore-emulator-v1.16.0.jar... {"metadata":{"emulator":{"name":"firestore"},"message":"downloading cloud-firestore-emulator-v1.16.0.jar..."}}
+[debug] [2023-02-16T18:17:49.243Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.16.0.jar 
+[debug] [2023-02-16T18:17:49.454Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.16.0.jar 200
+[debug] [2023-02-16T18:17:49.454Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.16.0.jar [stream]
+[info] i  firestore: Removing outdated emulator files: cloud-firestore-emulator-v1.15.1.jar {"metadata":{"emulator":{"name":"firestore"},"message":"Removing outdated emulator files: cloud-firestore-emulator-v1.15.1.jar"}}
+[debug] [2023-02-16T18:17:54.120Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-02-16T18:17:54.120Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-02-16T18:17:54.121Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.16.0.jar","--host","0.0.0.0","--port",8080,"--websocket_port",9150,"--project_id","demo-project","--seed_from_export","C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\export\\firestore_export\\firestore_export.overall_export_metadata","--rules","C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.16.0.jar\",\"--host\",\"0.0.0.0\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"demo-project\",\"--seed_from_export\",\"C:\\\\Users\\\\marti\\\\OneDrive\\\\Desktop\\\\projects\\\\ReactNative\\\\old\\\\old\\\\export\\\\firestore_export\\\\firestore_export.overall_export_metadata\",\"--rules\",\"C:\\\\Users\\\\marti\\\\OneDrive\\\\Desktop\\\\projects\\\\ReactNative\\\\old\\\\old\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
 [info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
 [info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
-[debug] [2023-02-06T18:13:55.774Z] > refreshing access token with scopes: []
-[debug] [2023-02-06T18:13:55.777Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2023-02-06T18:13:55.777Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2023-02-06T18:13:55.957Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2023-02-06T18:13:55.957Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2023-02-06T18:13:55.964Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/demo-project [none]
-[debug] [2023-02-06T18:13:56.196Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/demo-project 403
-[debug] [2023-02-06T18:13:56.196Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/demo-project {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
-[debug] [2023-02-06T18:13:56.197Z] HTTP Error: 403, The caller does not have permission
-[debug] [2023-02-06T18:13:56.197Z] Failed to retrieve default database instance: {"name":"FirebaseError","children":[],"exit":2,"message":"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.","original":{"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}},"response":{"statusCode":403}},"exit":1,"message":"HTTP Error: 403, The caller does not have permission","status":403},"status":500} {"metadata":{"emulator":{"name":"database"},"message":"Failed to retrieve default database instance: {\"name\":\"FirebaseError\",\"children\":[],\"exit\":2,\"message\":\"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.\",\"original\":{\"name\":\"FirebaseError\",\"children\":[],\"context\":{\"body\":{\"error\":{\"code\":403,\"message\":\"The caller does not have permission\",\"status\":\"PERMISSION_DENIED\"}},\"response\":{\"statusCode\":403}},\"exit\":1,\"message\":\"HTTP Error: 403, The caller does not have permission\",\"status\":403},\"status\":500}"}}
-[debug] [2023-02-06T18:13:56.197Z] database rules config:  [{"instance":"demo-project-default-rtdb","rules":"C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\database.rules.json"}]
-[debug] [2023-02-06T18:13:56.205Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
-[debug] [2023-02-06T18:13:56.205Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2023-02-06T18:13:56.205Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
-[debug] [2023-02-06T18:13:56.205Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\firebase-database-emulator-v4.11.0.jar","--host","0.0.0.0","--port",9000,"--single_project_mode","Warning","--functions_emulator_host","127.0.0.1","--functions_emulator_port",5001],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\firebase-database-emulator-v4.11.0.jar\",\"--host\",\"0.0.0.0\",\"--port\",9000,\"--single_project_mode\",\"Warning\",\"--functions_emulator_host\",\"127.0.0.1\",\"--functions_emulator_port\",5001],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[debug] [2023-02-16T18:17:57.230Z] > refreshing access token with scopes: []
+[debug] [2023-02-16T18:17:57.233Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-16T18:17:57.233Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-16T18:17:57.381Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-02-16T18:17:57.381Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-16T18:17:57.393Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/demo-project [none]
+[debug] [2023-02-16T18:17:57.656Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/demo-project 403
+[debug] [2023-02-16T18:17:57.656Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/demo-project {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-02-16T18:17:57.657Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-02-16T18:17:57.657Z] Failed to retrieve default database instance: {"name":"FirebaseError","children":[],"exit":2,"message":"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.","original":{"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}},"response":{"statusCode":403}},"exit":1,"message":"HTTP Error: 403, The caller does not have permission","status":403},"status":500} {"metadata":{"emulator":{"name":"database"},"message":"Failed to retrieve default database instance: {\"name\":\"FirebaseError\",\"children\":[],\"exit\":2,\"message\":\"Failed to get Firebase project demo-project. Please make sure the project exists and your account has permission to access it.\",\"original\":{\"name\":\"FirebaseError\",\"children\":[],\"context\":{\"body\":{\"error\":{\"code\":403,\"message\":\"The caller does not have permission\",\"status\":\"PERMISSION_DENIED\"}},\"response\":{\"statusCode\":403}},\"exit\":1,\"message\":\"HTTP Error: 403, The caller does not have permission\",\"status\":403},\"status\":500}"}}
+[debug] [2023-02-16T18:17:57.657Z] database rules config:  [{"instance":"demo-project-default-rtdb","rules":"C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\database.rules.json"}]
+[debug] [2023-02-16T18:17:57.660Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2023-02-16T18:17:57.660Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-02-16T18:17:57.660Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
+[debug] [2023-02-16T18:17:57.660Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\marti\\.cache\\firebase\\emulators\\firebase-database-emulator-v4.11.0.jar","--host","0.0.0.0","--port",9000,"--single_project_mode","Warning","--functions_emulator_host","127.0.0.1","--functions_emulator_port",5001],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\firebase-database-emulator-v4.11.0.jar\",\"--host\",\"0.0.0.0\",\"--port\",9000,\"--single_project_mode\",\"Warning\",\"--functions_emulator_host\",\"127.0.0.1\",\"--functions_emulator_port\",5001],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\",\"single_project_mode\"],\"joinArgs\":false}"}}
 [info] i  database: Database Emulator logging to database-debug.log {"metadata":{"emulator":{"name":"database"},"message":"Database Emulator logging to \u001b[1mdatabase-debug.log\u001b[22m"}}
 [info] i  auth: Importing config from C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\export\auth_export\config.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing config from C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\export\\auth_export\\config.json"}}
 [info] i  auth: Importing accounts from C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\export\auth_export\accounts.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing accounts from C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\export\\auth_export\\accounts.json"}}
-[debug] [2023-02-06T18:14:04.405Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2023-02-06T18:14:04.405Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2023-02-06T18:14:04.405Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\marti\\.cache\\firebase\\emulators\\ui-v1.11.1\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.1\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: downloading ui-v1.11.4.zip... {"metadata":{"emulator":{"name":"ui"},"message":"downloading ui-v1.11.4.zip..."}}
+[debug] [2023-02-16T18:18:10.424Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.4.zip 
+[debug] [2023-02-16T18:18:10.554Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.4.zip 200
+[debug] [2023-02-16T18:18:10.554Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.4.zip [stream]
+[info] i  ui: Removing outdated emulator files: ui-v1.11.1 {"metadata":{"emulator":{"name":"ui"},"message":"Removing outdated emulator files: ui-v1.11.1"}}
+[info] i  ui: Removing outdated emulator files: ui-v1.11.1.zip {"metadata":{"emulator":{"name":"ui"},"message":"Removing outdated emulator files: ui-v1.11.1.zip"}}
+[debug] [2023-02-16T18:18:12.990Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-02-16T18:18:12.990Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-02-16T18:18:12.990Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\marti\\.cache\\firebase\\emulators\\ui-v1.11.4\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\marti\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.4\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
 [info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
-[debug] [2023-02-06T18:14:04.537Z] Web / API server started at 127.0.0.1:4000
+[debug] [2023-02-16T18:18:13.192Z] Web / API server started at 127.0.0.1:4000
  {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
-[debug] [2023-02-06T18:14:04.538Z] Web / API server started at ::1:4000
+[debug] [2023-02-16T18:18:13.192Z] Web / API server started at ::1:4000
  {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
 [info] i  functions: Watching "C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\marti\\OneDrive\\Desktop\\projects\\ReactNative\\old\\old\\functions\" for Cloud Functions..."}}
-[debug] [2023-02-06T18:14:04.689Z] Validating nodejs source
+[debug] [2023-02-16T18:18:13.270Z] Validating nodejs source
 [warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
-[debug] [2023-02-06T18:14:07.261Z] > [functions] package.json contents: {
+[debug] [2023-02-16T18:18:14.854Z] > [functions] package.json contents: {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
@@ -85,19 +95,21 @@ Java HotSpot(TM) 64-Bit Server VM (build 19.0.1+10-21, mixed mode, sharing)
   },
   "private": true
 }
-[debug] [2023-02-06T18:14:07.261Z] Building nodejs source
-[debug] [2023-02-06T18:14:07.261Z] Analyzing nodejs backend spec
-[debug] [2023-02-06T18:14:07.263Z] Could not find functions.yaml. Must use http discovery
-[debug] [2023-02-06T18:14:07.580Z] Serving at port 9005
+[debug] [2023-02-16T18:18:14.855Z] Building nodejs source
+[debug] [2023-02-16T18:18:14.856Z] Failed to find version of module node: reached end of search path C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[debug] [2023-02-16T18:18:14.860Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-02-16T18:18:14.875Z] Found firebase-functions binary at 'C:\Users\marti\OneDrive\Desktop\projects\ReactNative\old\old\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-02-16T18:18:15.413Z] Serving at port 8059
 
-[debug] [2023-02-06T18:14:07.954Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[]}
-[debug] [2023-02-06T18:14:07.961Z] shutdown requested via /__/quitquitquit
+[debug] [2023-02-16T18:18:16.109Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-02-16T18:18:16.120Z] shutdown requested via /__/quitquitquit
 
 [info] +  functions: Loaded functions definitions from source: . {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: ."}}
-[debug] [2023-02-06T18:14:07.976Z] >>> [apiv2][query] PUT http://127.0.0.1:9000/.settings/rules.json ns=demo-project-default-rtdb
-[debug] [2023-02-06T18:14:07.976Z] >>> [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json "{\n  \"rules\": {\n    \".read\": true,\n    \".write\": true\n  }\n}"
-[debug] [2023-02-06T18:14:08.436Z] <<< [apiv2][status] PUT http://127.0.0.1:9000/.settings/rules.json 200
-[debug] [2023-02-06T18:14:08.437Z] <<< [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json {"status":"ok"}
+[debug] [2023-02-16T18:18:16.151Z] >>> [apiv2][query] PUT http://127.0.0.1:9000/.settings/rules.json ns=demo-project-default-rtdb
+[debug] [2023-02-16T18:18:16.151Z] >>> [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json "{\n  \"rules\": {\n    \".read\": true,\n    \".write\": true\n  }\n}"
+[debug] [2023-02-16T18:18:16.838Z] <<< [apiv2][status] PUT http://127.0.0.1:9000/.settings/rules.json 200
+[debug] [2023-02-16T18:18:16.838Z] <<< [apiv2][body] PUT http://127.0.0.1:9000/.settings/rules.json {"status":"ok"}
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
 │ ✔  All emulators ready! It is now safe to connect your app. │

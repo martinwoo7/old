@@ -5,7 +5,10 @@ import {
     StyleSheet,
     Touchable,
     SafeAreaView,
-    Pressable
+    Pressable,
+    useWindowDimensions,
+    ScrollView,
+    Image,
 } from "react-native";
 import emulators from "../../firebase";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -19,7 +22,8 @@ import Animated, {
     useSharedValue, 
     withSpring, 
     withTiming ,
-    useAnimatedReaction
+    useAnimatedReaction,
+    useAnimatedScrollHandler
 } from "react-native-reanimated";
 import AnimatedNumber from "react-native-animated-numbers";
 import { TapGestureHandler, TapGestureHandlerGestureEvent, LongPressGestureHandlerGestureEvent } from "react-native-gesture-handler";
@@ -137,6 +141,9 @@ export const MessageComponent = forwardRef((props: any, ref) => {
     const [likes, setLikes] = useState(props.data.likes)
     const [comments, setComments] = useState(props.data.comments)
 
+    const scrollX = useSharedValue(0)
+    const {width: windowWidth} = useWindowDimensions();
+
     const outlineStyle = useAnimatedStyle(() => {
         return {
             transform: [
@@ -171,6 +178,25 @@ export const MessageComponent = forwardRef((props: any, ref) => {
          
     })
     
+    const scrollHandler = useAnimatedScrollHandler((event) => {
+        scrollX.value = event.contentOffset.x
+    })
+    
+    const Pagination = ({ index }) => {
+        const width = useAnimatedStyle(() => {
+            return {
+                width: interpolate(scrollX.value, 
+                        [350 * (index - 1), 350 * index, 350 * (index + 1)],
+                        [8, 16, 8],
+                        Extrapolate.CLAMP
+                        )
+            }
+        })
+        return (
+            <Animated.View key={index} style={[styles.normalDot, width]} />
+        )
+    }
+
     return(
         // Parent container
 
@@ -183,12 +209,42 @@ export const MessageComponent = forwardRef((props: any, ref) => {
 
                 <Text>{' ' + props.data.verb}</Text>
             </View>
+
+            {props.data.images && props.data.images.length > 0 && 
+                <View style={[styles.scrollContainer]}>
+                    <Animated.ScrollView
+                        horizontal
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={scrollHandler}
+                        scrollEventThrottle={1}
+                    >
+                    {props.data.images.map((image, index) => {
+                        return (
+                            <View style={{width: 350, height: 350}} key={index}>
+                                <Image source={{uri: image.uri}} style={styles.card} />
+                            </View>
+                        )
+                    })}
+                    </Animated.ScrollView>
+                    <View style={styles.indicatorContainer} > 
+                        {props.data.images.map((image, index) => {
+                            return (
+                                <Pagination index={index}/>
+                            )
+                        })}
+
+                    </View>
+                </View>
+                
+            }
             <View style={[styles.textContent]}>
                 <Text>{props.data.content}</Text>
                 <View style={styles.rightArrow} />
                 <View style={styles.rightArrowOverlap} />
             </View>
-            <View style={{marginLeft: 8}}><Text>at the world.</Text></View>
+
+            <View style={{alignItems:'center'}}><Text>at the world.</Text></View>
 
             {/* container for buttons */}
             
@@ -240,14 +296,6 @@ const Posts = ({ navigation }, props: any) => {
     )
 }
 
-const Picture = () => {
-    return (
-        <View>
-            <Text>There is a picture in here</Text>
-        </View>
-    )
-}
-
 // const Message = memo(MessageComponent)
 export { Posts }
 
@@ -260,7 +308,7 @@ const styles = StyleSheet.create({
     },
     textContent: {
         backgroundColor: "#45BD3A",
-        alignSelf: 'flex-start',
+        alignSelf: 'flex-end',
         borderRadius: 12,
         paddingVertical: 10,
         paddingHorizontal: 12,
@@ -287,5 +335,33 @@ const styles = StyleSheet.create({
         bottom: -6,
         borderBottomLeftRadius: 18,
         right: -20,
+    },
+    scrollContainer: {
+        // height: 300,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    card: {
+        flex: 1,
+        width: undefined,
+        height: undefined,
+        marginVertical: 4,
+        marginHorizontal: 16,
+        borderRadius: 5,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    indicatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    normalDot: {
+        height: 8,
+        width: 8,
+        borderRadius: 4,
+        backgroundColor: 'silver',
+        marginHorizontal: 4
     }
 })
