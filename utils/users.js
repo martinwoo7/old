@@ -15,7 +15,7 @@ export const createUser =  async (user) => {
     // const userRef = collection(db, "user")
     console.log("Saving user data with UID: ", user.uid)
     try {
-        await setDoc(doc(db, "user", user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
             displayName: user.displayName,
             email: user.email,
             groups: [],
@@ -36,7 +36,7 @@ export const getUserData = async (uid) => {
     const db = emulators.firestore
     console.log("Retrieving user data with UID: ", uid)
     try {
-        const userSnap = await getDoc(doc(db, 'user', uid))
+        const userSnap = await getDoc(doc(db, 'users', uid))
         if (userSnap.exists()) {
             return userSnap.data()
         } else {

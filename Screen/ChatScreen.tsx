@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react'
-import { 
+import React, { useEffect, useState, useRef } from 'react'
+import {
     collection,
     setDoc,
     serverTimestamp,
@@ -39,7 +39,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import emulators from '../firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Animated, {Layout, LightSpeedInLeft, LightSpeedInRight} from 'react-native-reanimated';
+import Animated, { Layout, LightSpeedInLeft, LightSpeedInRight } from 'react-native-reanimated';
 
 // TODO: Scrolling up past a certain point will retrieve more messages
 
@@ -64,23 +64,23 @@ const ChatScreen = ({ navigation, route }) => {
         <SafeAreaView style={[styles.AndroidSafeArea, styles.container]}>
             <Header navigation={navigation} route={route} />
             <MessageContainer route={route} />
-        </SafeAreaView> 
-    )   
+        </SafeAreaView>
+    )
 }
 
-const Header = ({ navigation , route }) => (
-    <View style={[styles.flexify, {paddingRight: "5%", paddingVertical: 5}]}>
-        <TouchableOpacity style={{padding: 15}} onPress={() => navigation.navigate("ChatList")} activeOpacity={0.5} >
+const Header = ({ navigation, route }) => (
+    <View style={[styles.flexify, { paddingRight: "5%", paddingVertical: 5 }]}>
+        <TouchableOpacity style={{ padding: 15 }} onPress={() => navigation.navigate("ChatList")} activeOpacity={0.5} >
             <MaterialIcons name="arrow-back" size={25} color="white" />
         </TouchableOpacity>
 
-        <View style={[styles.flexify, {flex: 1, margin: 0}]}>
+        <View style={[styles.flexify, { flex: 1, margin: 0 }]}>
             <View style={styles.flexify}>
-                <Avatar size={36} rounded containerStyle={{marginRight: 10}} placeholderStyle={{ opacity: 0 }} source={{uri: route.params.photoURL}}/>
-                <Text textBreakStrategy='simple' numberOfLines={1} style={{fontWeight:"600", color: "white"}}>{route.params.to}</Text>
+                <Avatar size={36} rounded containerStyle={{ marginRight: 10 }} placeholderStyle={{ opacity: 0 }} source={{ uri: route.params.photoURL }} />
+                <Text textBreakStrategy='simple' numberOfLines={1} style={{ fontWeight: "600", color: "white" }}>{route.params.to}</Text>
             </View>
             <View style={styles.flexify}>
-                <TouchableOpacity activeOpacity={0.5} style={{marginRight: 25}}>
+                <TouchableOpacity activeOpacity={0.5} style={{ marginRight: 25 }}>
                     <MaterialIcons name="person" size={18} />
 
                 </TouchableOpacity>
@@ -97,9 +97,9 @@ const groupedDays = (messages) => {
         let temp = (el.createdAt.seconds * 1000) + (el.createdAt.nanoseconds / 1000000)
         const messageDay = moment(temp).format('YYYY-MM-DD')
         if (acc[messageDay]) {
-            return {...acc, [messageDay]: acc[messageDay].concat([el]) }
+            return { ...acc, [messageDay]: acc[messageDay].concat([el]) }
         }
-        return {...acc, [messageDay]: [el]}
+        return { ...acc, [messageDay]: [el] }
     }, {})
 }
 
@@ -114,7 +114,7 @@ const generateItems = (messages) => {
             // (x, y) => {new Date(y.createdAt) - new Date(x.createdAt)}
             (x, y) => y.date - x.date
         )
-        return acc.concat([...sortedMessage, {type:'day', date, id: date }])
+        return acc.concat([...sortedMessage, { type: 'day', date, id: date }])
     }, [])
     return items
 }
@@ -139,16 +139,16 @@ const MessageContainer = ({ route }) => {
         let messageText = message
         let now = dateToTime(new Date())
         let time = Timestamp.fromDate(new Date())
-        
+
         if (message.length > 1) {
             if (!groupId.current) {
                 // if the groupId is still not set, it means a previous chat
                 // didn't exist and we need to create a new collection
-                
+
                 // creating private chat
                 console.log("Creating new group message")
-            
-                const newDocRef = collection(db, 'group')
+
+                const newDocRef = collection(db, 'groups')
                 const docRef = await addDoc(newDocRef, {
                     createdAt: time,
                     createdBy: auth.currentUser.uid,
@@ -156,7 +156,7 @@ const MessageContainer = ({ route }) => {
                     lastMessage: '',
                     lastSender: auth.currentUser.uid,
                     members: {
-                        [auth.currentUser.uid]: true, 
+                        [auth.currentUser.uid]: true,
                         [receiverID]: true
                     },
                     modifiedAt: time,
@@ -166,9 +166,9 @@ const MessageContainer = ({ route }) => {
 
                 groupId.current = docRef.id
                 console.log('Group id created: ', groupId.current)
-                
+
                 const q2 = query(
-                    collection(db,'group', groupId.current, 'messages'),
+                    collection(db, 'groups', groupId.current, 'messages'),
                     orderBy('createdAt', 'asc'),
                     limit(50)
                 )
@@ -177,14 +177,14 @@ const MessageContainer = ({ route }) => {
                     snapshot.docChanges().forEach((change) => {
                         // let date = dateToTime(doc.data().createdAt.toDate())
                         if (change.type === 'added') {
-                            
+
                             // I need to add extra 'tags' here to identify when a chat group ends and 
                             // when one begins.
                             // Also need to add tags to determine which message in a group is the start
                             // and which is the end
 
                             // let temp = Object.assign({id: change.doc.id, date: date}, change.doc.data())
-                            let temp = Object.assign({id: change.doc.id}, change.doc.data())
+                            let temp = Object.assign({ id: change.doc.id }, change.doc.data())
                             newMessages.unshift(temp)
                         }
                         if (change.type === 'modified') {
@@ -211,18 +211,18 @@ const MessageContainer = ({ route }) => {
 
             try {
                 console.log('saving message to db: ', messageText)
-                await addDoc(collection(db, "group", groupId.current, "messages"), {
+                await addDoc(collection(db, "groups", groupId.current, "messages"), {
                     owner: auth.currentUser.uid,
                     to: receiverID,
                     message_text: messageText,
                     createdAt: time,
                     date: now
                 })
-                .then((msg) => {
-                    console.log('Message sent successfully with id', msg.id)
-                })
+                    .then((msg) => {
+                        console.log('Message sent successfully with id', msg.id)
+                    })
 
-                await updateDoc(doc(db, 'group', groupId.current), {
+                await updateDoc(doc(db, 'groups', groupId.current), {
                     modifiedAt: time,
                     lastMessage: messageText,
                     lastSender: auth.currentUser.uid
@@ -233,11 +233,11 @@ const MessageContainer = ({ route }) => {
                 Alert.alert('Message sending failed with error', error.message)
             }
             // getMessages()
-        } else { 
+        } else {
             Alert.alert('Chat not sent', 'Must be greater than 1 character');
         }
     }
-    
+
     const getMessages = async () => {
         // console.log("Getting messages")
         // check if message to person already exists
@@ -266,7 +266,7 @@ const MessageContainer = ({ route }) => {
 
                     // check if a private chat already exists
                     const q = query(
-                        collection(db, 'group'),
+                        collection(db, 'groups'),
                         where(me, "==", true),
                         where(them, "==", true),
                         where('type', '==', 1),
@@ -281,7 +281,7 @@ const MessageContainer = ({ route }) => {
                         // Should only be 1 possible chat
                         console.log("Private chat exists! Retrieving")
                         groupId.current = temp[0]
-                    } else if (temp.length === 0){
+                    } else if (temp.length === 0) {
                         // Doesn't exist or 
                         console.log("Private chat doesn't exist")
                     } else {
@@ -305,7 +305,7 @@ const MessageContainer = ({ route }) => {
         // 3. just created a new group after sending a message
         if (groupId.current) {
             const q2 = query(
-                collection(db, 'group', groupId.current, 'messages'),
+                collection(db, 'groups', groupId.current, 'messages'),
                 orderBy('createdAt', 'asc'),
                 limit(50)
             )
@@ -325,7 +325,7 @@ const MessageContainer = ({ route }) => {
                         snapshot.forEach((doc) => {
                             // let date = dateToTime(doc.data().createdAt.toDate())
                             // newMessages.unshift(Object.assign({id: doc.id, date: date}, doc.data()))
-                            newMessages.unshift(Object.assign({id: doc.id}, doc.data()))
+                            newMessages.unshift(Object.assign({ id: doc.id }, doc.data()))
                         })
 
                         // storeData(groupId.current, newMessages)
@@ -341,7 +341,7 @@ const MessageContainer = ({ route }) => {
                             if (change.type === 'added') {
                                 console.log("Added message: ", change.doc.data())
                                 // let date = dateToTime(change.doc.data().createdAt.toDate())
-                                let changedItem = Object.assign({id: change.doc.id}, change.doc.data())
+                                let changedItem = Object.assign({ id: change.doc.id }, change.doc.data())
                                 chats.unshift(changedItem)
                             }
                             if (change.type === 'modified') {
@@ -354,13 +354,13 @@ const MessageContainer = ({ route }) => {
                                 console.log("Deleted message: ", change.doc.data())
                                 // I can follow what FB does and instead of deleting - change the text to 'deleted'
                             }
-                            
+
                         })
                         storeData(groupId.current, chats)
                         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-                        setMessages(chats)   
+                        setMessages(chats)
                     }
-                    
+
 
                 } else {
                     // nothing saved - load everything from DB and then save 
@@ -368,7 +368,7 @@ const MessageContainer = ({ route }) => {
                     let newMessages = []
                     snapshot.forEach((doc) => {
                         // let date = dateToTime(doc.data().createdAt.toDate())
-                        newMessages.unshift(Object.assign({id: doc.id}, doc.data()))
+                        newMessages.unshift(Object.assign({ id: doc.id }, doc.data()))
                     })
                     storeData(groupId.current, newMessages)
                     setMessages(newMessages)
@@ -415,31 +415,31 @@ const MessageContainer = ({ route }) => {
     }, [messages])
 
     // I need to render message groups?
-    const renderItem = ({item}) => {
+    const renderItem = ({ item }) => {
         if (item.type && item.type === 'day') {
             return <Day {...item} />
         }
-        return <Message 
-            currentUser={auth.currentUser.uid} 
-            owner={item.owner} 
-            message={item} 
+        return <Message
+            currentUser={auth.currentUser.uid}
+            owner={item.owner}
+            message={item}
             display={route.params.photoURL}
-            
+
         />
     }
 
-    return(
+    return (
         // I need to add dividers for messages in different days
         // <>
         // <ScrollView contentContainerStyle={{flex: 1}}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             {/* <KeyboardAvoidingView 
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{flex: 1}}
             > */}
-            <FlatList 
-                style={[styles.invert, {backgroundColor:'white', height: '100%'}]}
-                contentContainerStyle={[ {paddingTop: 80, padding: 10, marginBottom: 50}]}
+            <FlatList
+                style={[styles.invert, { backgroundColor: 'white', height: '100%' }]}
+                contentContainerStyle={[{ paddingTop: 80, padding: 10, marginBottom: 50 }]}
                 showsVerticalScrollIndicator={false}
                 data={renderMessages}
                 extraData={renderMessages}
@@ -448,21 +448,21 @@ const MessageContainer = ({ route }) => {
                 initialNumToRender={12}
                 ListEmptyComponent={
                     <View style={[styles.invert, styles.date]}>
-                        <Text style={{color: 'lightgrey'}}>Say something :)</Text>
+                        <Text style={{ color: 'lightgrey' }}>Say something :)</Text>
                     </View>
-                    }
+                }
                 keyExtractor={item => item.id}
-            >  
-                <View style={{flex: 1, alignItems: 'center', justifyContent:'center', marginVertical: 5}}></View>
+            >
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginVertical: 5 }}></View>
             </FlatList>
-            
 
-            <View style={[styles.flexify, styles.positAtBottom, styles.shadow ]}>
+
+            <View style={[styles.flexify, styles.positAtBottom, styles.shadow]}>
                 {/* <TouchableOpacity style={{paddingVertical: 5, paddingHorizontal: 7, borderRadius: 50, backgroundColor: '#122643'}}>
                     <MaterialCommunityIcons name="plus" size={12} color="white" />
                 </TouchableOpacity> */}
-                
-                <View style={{flex: 1}}>
+
+                <View style={{ flex: 1 }}>
                     <TextInput
                         placeholder="Message"
                         onChangeText={(text) => setMessage(text)}
@@ -474,7 +474,7 @@ const MessageContainer = ({ route }) => {
                     />
                 </View>
                 <TouchableOpacity
-                    style={{paddingVertical: 5, paddingHorizontal: 7, borderRadius: 50}}
+                    style={{ paddingVertical: 5, paddingHorizontal: 7, borderRadius: 50 }}
                     activeOpacity={0.5}
                     disabled={message.length < 1}
                     onPress={() => {
@@ -487,7 +487,7 @@ const MessageContainer = ({ route }) => {
                 </TouchableOpacity>
             </View>
             {/* </KeyboardAvoidingView> */}
-         {/* </ScrollView> */}
+            {/* </ScrollView> */}
         </View>
         // </>
     )
@@ -514,7 +514,7 @@ const Day = (props) => {
             // same month
             if (temp.date() === today.date()) {
                 // same day
-                
+
                 date = "Today"
             } else {
                 if (today.date() - temp.date() === 1) {
@@ -530,15 +530,15 @@ const Day = (props) => {
         date = temp.format("MM Do YYYY")
     }
 
-    
-    return(
+
+    return (
         <View style={[styles.invert, styles.date]}>
-            <Text style={{color: 'lightgrey'}}>{date}</Text>
+            <Text style={{ color: 'lightgrey' }}>{date}</Text>
         </View>
     )
 }
 
-const Message = ({ message, currentUser, owner, display}) => {
+const Message = ({ message, currentUser, owner, display }) => {
 
     const isDateToday = (date) => {
         const today = new Date().getDate()
@@ -555,38 +555,38 @@ const Message = ({ message, currentUser, owner, display}) => {
 
     return currentUser === owner ? (
         <View style={[styles.invert, styles.flexify, styles.spaceMsg]}>
-            
-            <View style={[styles.msgBg, {marginRight: 10}]} >
-                <Text style={{fontWeight: "600", marginBottom: 5}}>
+
+            <View style={[styles.msgBg, { marginRight: 10 }]} >
+                <Text style={{ fontWeight: "600", marginBottom: 5 }}>
                     {message.message_text}
                 </Text>
-                <Text style={{ fontWeight: "600", textAlign: "right"}}>
+                <Text style={{ fontWeight: "600", textAlign: "right" }}>
                     {/* {dateToTime(new Date(message.createdAt * 1000))} */}
                     {message.date}
                 </Text>
             </View>
-            <Avatar 
+            <Avatar
                 rounded
                 title="M"
-                containerStyle={{backgroundColor: 'coral'}}
+                containerStyle={{ backgroundColor: 'coral' }}
             />
         </View>
     ) : (
         <View style={[styles.invert, styles.flexify, styles.spaceMsg]}>
-            <Avatar 
+            <Avatar
                 rounded
                 // source={{ uri: display}}
-                containerStyle={{backgroundColor: 'lightpink'}}
+                containerStyle={{ backgroundColor: 'lightpink' }}
                 title="T"
             />
-            <View style={[styles.msgBgR, {backgroundColor: 'aliceblue', marginLeft: 10}]}>
+            <View style={[styles.msgBgR, { backgroundColor: 'aliceblue', marginLeft: 10 }]}>
                 {/* <Text style={{fontWeight: "800", fontSize: 13, color: '#4c4c4c', textTransform: 'capitalize'}}>
                     Other Person
                 </Text> */}
-                <Text style={{fontWeight: "600", marginBottom: 5}}>
+                <Text style={{ fontWeight: "600", marginBottom: 5 }}>
                     {message.message_text}
                 </Text>
-                <Text style={{ fontWeight: "600"}}>
+                <Text style={{ fontWeight: "600" }}>
                     {message.date}
                 </Text>
             </View>
@@ -611,7 +611,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         // flex: 0, 
-        alignSelf: 'flex-start', 
+        alignSelf: 'flex-start',
         maxWidth: "60%",
         marginLeft: 'auto'
     },
@@ -621,7 +621,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         // flex: 0, 
-        alignSelf: 'flex-start', 
+        alignSelf: 'flex-start',
         maxWidth: "60%",
         marginRight: 'auto'
     },
@@ -629,7 +629,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginVertical: 5,
     },
-    positAtBottom:{
+    positAtBottom: {
         position: 'absolute',
         left: 0,
         right: 0,
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
     },
     shadow: {
         shadowColor: '#171717',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.26,
         shadowRadius: 10,
         elevation: 12,
@@ -657,7 +657,7 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     invert: {
-        transform: [{rotate: '180deg'}]
+        transform: [{ rotate: '180deg' }]
     },
     inputStyle: {
         backgroundColor: "lightgrey",

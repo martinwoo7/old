@@ -17,44 +17,13 @@ import { TapGestureHandler } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const PostScreen = ({ navigation, route}) => {
-    const temp = route.params
-    const isActive = useSharedValue(false)
-    const x = useSharedValue(-500)
-    const { postState } = useInternal()
-    
-    useEffect(() => {
-        const unsub = navigation.addListener('focus', () => {
-            x.value = 0
-        })
-
-        const unsub2 = navigation.addListener('blur', () => {
-            // x.value = 0
-            console.log("leave")
-            postState.value = CONTEXT_MENU_STATE.END
-        })
-
-        return () => {
-            unsub
-            unsub2
-        }
-    }, [navigation])
+    const data = route.params.data
+    console.log(data)
 
     const gestureEvent = useAnimatedGestureHandler({
         onActive: () => {
-            if (!isActive.value) {
-                runOnJS(navigation.goBack)()
-            }
-        }
-    })
-
-    const animatedStyle = useAnimatedStyle(() => {
-        
-        return {
-            transform: [
-                {
-                    translateX: withTiming(x.value, {duration: 400})
-                }
-            ]
+            runOnJS(navigation.goBack)()
+            
         }
     })
 
@@ -69,8 +38,8 @@ const PostScreen = ({ navigation, route}) => {
                     </TapGestureHandler>
 
                 </View>
-                <Animated.View style={[animatedStyle]}>
-                    <MessageComponent data={temp}/>
+                <Animated.View style={[]}>
+                    <MessageComponent data={data} enabled={false} navigation={navigation} state={data.type} tags={data.tags}/>
                 </Animated.View>
             </SafeAreaView>
         </>

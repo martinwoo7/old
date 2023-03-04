@@ -325,6 +325,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    compile project(":react-native-video")
+    implementation "androidx.appcompat:appcompat:1.0.0"
 }
 
 if (isNewArchitectureEnabled()) {
