@@ -65,7 +65,7 @@ const ServerScreen = ({ navigation, route }) => {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
-    
+    const [options, setOptions] = useState(null)
 
     const filterSheetRef = useRef<BottomSheet>(null)
     const rightSheetRef = useRef<BottomSheet>(null)
@@ -85,19 +85,17 @@ const ServerScreen = ({ navigation, route }) => {
             setRefreshing(false)
         }, 2000)
     }, [])
-
-    
-    const bgStyle = useAnimatedStyle(() => {
-        const backgroundColor = interpolateColor(
-            // tslint:disable-next-line
-            drawerProgress.value,
-            [0.98, 0.99],
-            ["rgba(53, 57, 63, 1)", "rgba(53, 57, 63, 0)"]
-        )
-        return {
-            backgroundColor
-        }
-    })
+    // const bgStyle = useAnimatedStyle(() => {
+    //     const backgroundColor = interpolateColor(
+    //         // tslint:disable-next-line
+    //         drawerProgress.value,
+    //         [0.98, 0.99],
+    //         ["rgba(53, 57, 63, 1)", "rgba(53, 57, 63, 0)"]
+    //     )
+    //     return {
+    //         backgroundColor
+    //     }
+    // })
 
     useEffect(() => {
         const getPosts = async () => {
@@ -112,7 +110,7 @@ const ServerScreen = ({ navigation, route }) => {
             const posts = []
             querySnapshot.forEach((doc) => {
                 // temp.push(doc.data())
-                const temp = Object.assign({id: doc.id}, doc.data())
+                const temp = Object.assign({ id: doc.id }, doc.data())
                 posts.push(temp)
             })
             setItems(posts)
@@ -124,94 +122,108 @@ const ServerScreen = ({ navigation, route }) => {
         // console.log(item)
         return (
             <>
-            <MessageComponent navigation={navigation} enabled data={item} type={item.type} tags={item.tags}/>
+                <MessageComponent navigation={navigation} enabled data={item} type={item.type} tags={item.tags}/>
             </>
 
         )
     }
 
+    const separator = () => {
+        return (
+            <View style={{ marginVertical: 5 }}></View>
+        )
+    }
     const MiddlePanel = () => {
-        
+
         return (
             <>
-            <Animated.View style={[styles.middlePanel]}>
-                <Animated.View style={[{ flex: 1, marginTop: StatusBar.currentHeight, backgroundColor: "#35393F", paddingHorizontal: 15, borderTopLeftRadius: 12 }]}>
-                    <TouchableWithoutFeedback onPress={toggleDrawer} >
-                        <MaterialCommunityIcons name="menu" style={{ paddingTop: 15 }} color={'lightgrey'} size={26} />
-                    </TouchableWithoutFeedback>
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                        onRefresh={()=>onRefresh()}
-                        refreshing={refreshing}
-                        data={items}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.content}
-                        contentContainerStyle={{ paddingBottom: 10 }}
-                        // tslint:disable-next-line
-                        ItemSeparatorComponent={<View style={{ marginVertical: 5 }}></View>}
-                        style={{ marginTop: 10 }}
-                        ListEmptyComponent={<View><Text>Nothing here :(</Text></View>}
-                    />
+                <Animated.View style={[styles.middlePanel]}>
+                    <Animated.View style={[{ flex: 1, marginTop: StatusBar.currentHeight, backgroundColor: "#35393F", paddingHorizontal: 15, borderTopLeftRadius: 12 }]}>
+                        <TouchableWithoutFeedback onPress={toggleDrawer} >
+                            <MaterialCommunityIcons name="menu" style={{ paddingTop: 15 }} color={'lightgrey'} size={26} />
+                        </TouchableWithoutFeedback>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                            onRefresh={() => onRefresh()}
+                            refreshing={refreshing}
+                            data={items}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.content}
+                            contentContainerStyle={{ paddingBottom: 10 }}
+                            // tslint:disable-next-line
+                            ItemSeparatorComponent={separator}
+                            style={{ marginTop: 10 }}
+                            ListEmptyComponent={<View><Text>Nothing here :(</Text></View>}
+                        />
+                    </Animated.View>
+
+                    <View style={{ flexDirection: 'row', backgroundColor: '#202225' }}>
+
+                        <Pressable
+                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            onPress={() => { filterSheetRef.current.expand() }}
+                        >
+                            <MaterialCommunityIcons name="filter-variant" size={ICON_SIZE} color="lightgrey" />
+                        </Pressable>
+
+                        <Pressable
+                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            onPress={() => { navigation.navigate('NewPost') }}
+                        >
+                            <MaterialIcons name="add" size={ICON_SIZE} color="lightgrey" />
+                        </Pressable>
+
+                        <Pressable
+                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            onPress={() => { rightSheetRef.current.expand() }}
+                        >
+
+                            <MaterialCommunityIcons name="filter-variant" size={ICON_SIZE} color="lightgrey" />
+                        </Pressable>
+
+                    </View>
+
+
+                    <BottomSheet
+                        enablePanDownToClose
+                        ref={filterSheetRef}
+                        index={-1}
+                        snapPoints={snapPoints}
+                        // onChange={handleSheetChanges}
+                        backgroundStyle={{ backgroundColor: '#202225' }}
+                        handleIndicatorStyle={{ backgroundColor: "lightgrey" }}
+                    >
+                        <View>
+                            <Text style={{ color: "lightgrey" }}>Filter item</Text>
+                        </View>
+                    </BottomSheet>
+
+                    {/* {options &&
+                        <BottomSheet
+                            enablePanDownToClose
+                            ref={rightSheetRef}
+                            index={-1}
+                            snapPoints={snapPoints}
+                            // onChange={handleSheetChanges}
+                            backgroundStyle={{ backgroundColor: '#202225' }}
+                            handleIndicatorStyle={{ backgroundColor: "lightgrey" }}
+                        >
+                            <View style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'aliceblue' }}>
+                                <Pressable style={{ marginVertical: 10 }}>
+                                    <Text>Follow {options.name}</Text>
+                                </Pressable>
+                                <Pressable style={{ marginVertical: 10 }}>
+                                    <Text>Block {options.name}</Text>
+                                </Pressable>
+                                <Pressable style={{ marginVertical: 10 }}>
+                                    <Text>Report {options.name}</Text>
+                                </Pressable>
+                            </View>
+                        </BottomSheet>
+                    } */}
+
                 </Animated.View>
-
-                <View style={{ flexDirection: 'row', backgroundColor: '#202225' }}>
-
-                    <Pressable
-                        style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
-                        onPress={() => { filterSheetRef.current.expand() }}
-                    >
-                        <MaterialCommunityIcons name="filter-variant" size={ICON_SIZE} color="lightgrey" />
-                    </Pressable>
-
-                    <Pressable
-                        style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
-                        onPress={() => { navigation.navigate('NewPost') }}
-                    >
-                        <MaterialIcons name="add" size={ICON_SIZE} color="lightgrey" />
-                    </Pressable>
-
-                    <Pressable
-                        style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
-                        onPress={() => { rightSheetRef.current.expand() }}
-                    >
-
-                        <MaterialCommunityIcons name="filter-variant" size={ICON_SIZE} color="lightgrey" />
-                    </Pressable>
-
-                </View>
-
-
-                <BottomSheet
-                    enablePanDownToClose
-                    ref={filterSheetRef}
-                    index={-1}
-                    snapPoints={snapPoints}
-                    // onChange={handleSheetChanges}
-                    backgroundStyle={{ backgroundColor: '#202225' }}
-                    handleIndicatorStyle={{ backgroundColor: "lightgrey" }}
-                >
-                    <View>
-                        <Text style={{ color: "lightgrey" }}>Filter item</Text>
-                    </View>
-                </BottomSheet>
-
-                <BottomSheet
-                    enablePanDownToClose
-                    ref={rightSheetRef}
-                    index={-1}
-                    snapPoints={snapPoints}
-                    // onChange={handleSheetChanges}
-                    backgroundStyle={{ backgroundColor: '#202225' }}
-                    handleIndicatorStyle={{ backgroundColor: "lightgrey" }}
-                >
-                    <View>
-                        <Text style={{ color: "lightgrey" }}>Right???</Text>
-                    </View>
-                </BottomSheet>
-
-                
-            </Animated.View>
             </>
         )
     }

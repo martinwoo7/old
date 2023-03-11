@@ -32,6 +32,8 @@ import moment from 'moment/moment';
 import { Portal } from '@gorhom/portal'
 import { FullWindowOverlay } from 'react-native-screens';
 
+import { handleDate } from "../../utils/algos";
+import { onSnapshot, collection, query } from "firebase/firestore";
 // ** END HOOKS IMPORT
 
 
@@ -59,23 +61,62 @@ const temp = {
 // export const MessageComponent = forwardRef((props: any, ref) => {
 export const MessageComponent = (props: any) => {
     // console.log(props)
-    const sheetRef = useRef<BottomSheet>(null)
-    const snapPoints = useMemo(() => ['10%', '50%'], [])
 
-    const likeRef = useRef(null)
     const menuRef = useRef(null)
+    const commentRef = useRef(null)
+    const likeRef = useRef(null)
 
     const db = emulators.firestore
     const user = emulators.authentication
 
     const liked = useSharedValue(0)
     const [heart, setHeart] = useState(liked.value == 0 ? false : true)
-    const [likes, setLikes] = useState(props.data.likes)
-    const [comments, setComments] = useState(props.data.comments)
+
+    const [likes, setLikes] = useState(0)
+    const [comments, setComments] = useState(0)
     const options = props.options
 
     const scrollX = useSharedValue(0)
     const { width: windowWidth } = useWindowDimensions();
+
+    useEffect(() => {
+        const q = query(
+            collection(db, 'counters', props.data.id, 'shards')
+        )
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            let total_count = 0
+            snapshot.forEach((doc) => {
+                total_count += doc.data().count
+            })
+            setComments(total_count)
+        })
+
+        commentRef.current = unsubscribe
+
+        return () => {
+            commentRef.current && commentRef.current()
+        }
+    }, [])
+
+    useEffect(() => {
+        const q = query(
+            collection(db, 'counters', props.data.id, 'likes')
+        )
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            let total_count = 0
+            snapshot.forEach((doc) => {
+                total_count += doc.data().count
+            })
+            setLikes(total_count)
+        })
+
+        likeRef.current = unsubscribe
+
+        return () => {
+            likeRef.current && likeRef.current()
+        }
+    }, [])
+
 
     const outlineStyle = useAnimatedStyle(() => {
         return {
@@ -155,55 +196,9 @@ export const MessageComponent = (props: any) => {
         }
     }
 
-    const dateToTime = (date) => {
-        let hours = date.hours()
-        let minutes = date.minutes()
-        let ampm = hours >= 12 ? 'pm' : 'am'
-        hours = hours % 12
-        hours = hours ? hours : 12
-        minutes = minutes < 10 ? '0' + minutes : minutes
-        let strTime = hours + ':' + minutes + ' ' + ampm
-        return strTime
-    }
-
-    const handleDate = (dat) => {
-        const temp = moment(dat)
-        const today = moment()
-        let date
-        if (temp.year() === today.year()) {
-            // same year
-            if (temp.month() === today.month()) {
-                // same month
-                if (temp.date() === today.date()) {
-                    // same day
-
-                    date = "Today"
-                } else {
-                    if (today.date() - temp.date() === 1) {
-                        date = "Yesterday"
-                    } else {
-                        date = temp.format("dddd")
-                    }
-                }
-
-                date = date + " at " + dateToTime(temp)
-            } else {
-                date = temp.format("MMM Do")
-            }
-        } else {
-            date = temp.format("D MMM YY")
-        }
-
-        return (
-            <View style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Text style={{ color: 'darkgrey' }}>{date}</Text>
-            </View>
-        )
-
-    }
 
     const handleNavigate = (() => {
-        props.navigation.navigate('PostScreen', { data: props.data })
+        props.navigation.navigate('PostStack', { screen: 'PostScreen', params: { data: props.data } })
     })
 
     return (
@@ -218,9 +213,13 @@ export const MessageComponent = (props: any) => {
 
                         <Text>{' ' + props.data.verb}</Text>
 
-                        <Pressable ref={menuRef} onPress={() => sheetRef.current.expand()} disabled={!props.enabled} style={{ marginLeft: 'auto' }} >
-                            <MaterialCommunityIcons name="dots-vertical" color='lightgrey' size={24} />
-                        </Pressable>
+                        {/* tslint:disable-next-line */}
+                        {props.enabled &&
+                            <Pressable ref={menuRef} onPress={() => console.log('options')} disabled={!props.enabled} style={{ marginLeft: 'auto' }} >
+                                <MaterialCommunityIcons name="dots-vertical" color='lightgrey' size={24} />
+                            </Pressable>
+                        }
+
 
                     </View>
 
@@ -320,7 +319,7 @@ export const MessageComponent = (props: any) => {
 
                     {/* container for buttons */}
                     <View style={{ marginTop: 16, marginLeft: 8, flexDirection: 'row', alignItems: 'center' }}>
-                        <Pressable onPress={toggleLikes} disabled={!props.enabled}>
+                        <Pressable onPress={toggleLikes} disabled={props.new} style={{ width: 80 }}>
                             <Animated.View style={{ flexDirection: 'row', alignItems: 'center' }} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                                 <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
                                     <MaterialCommunityIcons name="heart-outline" color="#BF3946" size={24} />
@@ -329,28 +328,33 @@ export const MessageComponent = (props: any) => {
                                     <MaterialCommunityIcons name="heart" color="#BF3946" size={24} />
                                 </Animated.View>
 
-                                {props.new ?
-                                    <Text style={{ paddingLeft: 5 }}>0</Text> :
-                                    <AnimatedNumber
-                                        includeComma
-                                        animateToNumber={likes}
-                                        style={{ paddingLeft: 5 }}
-                                        animationDuration={500}
-                                    />
-                                }
+                                <View style={{ alignItems: 'center', width: 40 }}>
+                                    {props.new ?
+                                        <Text style={{ paddingLeft: 5 }}>0</Text> :
+                                        <AnimatedNumber
+                                            includeComma
+                                            animateToNumber={likes}
+                                            // style={{ paddingLeft: 5 }}
+                                            animationDuration={500}
+                                        />
+                                    }
+                                </View>
                             </Animated.View>
                         </Pressable>
 
-                        {/* <TapGestureHandler numberOfTaps={1} onGestureEvent={props.gestureEvent}> */}
-                        <Animated.View style={{ marginHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="chat-outline" color="#2097CE" size={24} />
-                            <Text style={{ paddingLeft: 5 }}>{comments}</Text>
-                        </Animated.View>
-                        {/* </TapGestureHandler> */}
+                        <Pressable style={{ marginHorizontal: 0, width: 70 }} >
+                            <Animated.View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="chat-outline" color="#2097CE" size={24} />
+                                <Text style={{ paddingLeft: 5 }}>{comments}</Text>
+                            </Animated.View>
+                        </Pressable>
 
                         <Pressable style={{ flexDirection: 'row' }}>
-                            <MaterialCommunityIcons name="repeat" color="#DFB535" size={24} />
-                            {/* <Text style={{paddingLeft: 5}}>{temp.comments}</Text> */}
+                            <Animated.View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="repeat" color="#DFB535" size={24} />
+                                <Text style={{ paddingLeft: 5 }}>{0}</Text>
+                            </Animated.View>
+
                         </Pressable>
 
                         {/* <Text style={{marginLeft: 'auto', marginRight: 10}}>{handleDate()}</Text> */}
@@ -366,33 +370,6 @@ export const MessageComponent = (props: any) => {
 
                 </Animated.View>
             </Pressable>
-
-            {/* <Portal>
-
-                <BottomSheet
-                    enablePanDownToClose
-                    ref={sheetRef}
-                    index={-1}
-                    snapPoints={snapPoints}
-                    // style={{ height: '100%'}}
-                    // onChange={handleSheetChanges}
-                    backgroundStyle={{ backgroundColor: '#202225' }}
-                    handleIndicatorStyle={{ backgroundColor: "lightgrey" }}
-                >
-                    <View style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'aliceblue' }}>
-                        <Pressable style={{ marginVertical: 10 }}>
-                            <Text>Follow</Text>
-                        </Pressable>
-                        <Pressable style={{ marginVertical: 10 }}>
-                            <Text>Block</Text>
-                        </Pressable>
-                        <Pressable style={{ marginVertical: 10 }}>
-                            <Text>Report</Text>
-                        </Pressable>
-                    </View>
-                </BottomSheet>
-
-            </Portal> */}
         </>
     )
 }

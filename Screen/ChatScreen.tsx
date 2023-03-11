@@ -138,7 +138,8 @@ const MessageContainer = ({ route }) => {
         let receiverID = route.params.id
         let messageText = message
         let now = dateToTime(new Date())
-        let time = Timestamp.fromDate(new Date())
+        // let time = Timestamp.fromDate(new Date())
+        let time = serverTimestamp()
 
         if (message.length > 1) {
             if (!groupId.current) {
