@@ -22,10 +22,12 @@ import {
     arrayUnion,
     where,
     Timestamp,
+    writeBatch
 } from 'firebase/firestore';
 import emulators from "../firebase";
 
 const PostNavigation = createBottomTabNavigator()
+
 const NewPost = ({ navigation }) => {
 
     const db = emulators.firestore
@@ -34,6 +36,17 @@ const NewPost = ({ navigation }) => {
     const [tags, setTags] = useState([])
     const [content, setContent] = useState('')
 
+    const createCounter = (ref, numShards) => {
+        const batch = writeBatch(db)
+        batch.set(ref, { numShards: numShards });
+        for (let i = 0; i < numShards; i++) {
+            const shardRef = doc(ref, 'shards', i.toString())
+            const likeRef = doc(ref, 'likes', i.toString())
+            batch.set(shardRef, { count: 0})
+            batch.set(likeRef, { count: 0})
+        }
+        return batch.commit()
+    }
 
     const handlePost = async (type: number, images, video) => {
         // handle backend posting here
@@ -74,8 +87,12 @@ const NewPost = ({ navigation }) => {
 
         }).then((result) => {
             console.log('Post successfully created with id', result.id)
+            const ref = doc(db, "counters", result.id)
+            createCounter(ref, 10)
+            
             navigation.goBack()
-        }) 
+        })
+
     }
 
     return (

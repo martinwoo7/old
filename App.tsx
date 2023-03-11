@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StatusBar, LogBox, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, getDrawerStatusFromState } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -18,6 +17,7 @@ import GroupScreen from './Screen/GroupScreen';
 import ServerScreen from './Screen/ServerScreen';
 import PostScreen from './Screen/PostScreen';
 import NewPost from './Screen/NewPost';
+import EventsScreen from './Screen/Events';
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as NavigationBar from 'expo-navigation-bar'
@@ -26,18 +26,21 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import emulators from './firebase';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { gestureHandlerRootHOC, GestureHandlerRootView} from 'react-native-gesture-handler';
-import { PortalProvider } from '@gorhom/portal'
+import Comment from './Components/Comment';
+
+
 // cd old
 // npx expo start
 
 // firebase emulators:start --project demo-project --import=./export --export-on-exit=./export
-
+// firebase emulators:export ./export --project demo-project 
 // TODO: integrate storage w/ redux, redux-persist, and AsyncStorage
 
 const MainStack = createNativeStackNavigator()
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const chatStack = createStackNavigator();
+const Post = createNativeStackNavigator()
 
 const navTheme = {
   ...DarkTheme,
@@ -110,10 +113,21 @@ const Chat = () => {
   )
 }
 
+const PostStack = () => {
+  return (
+    <Post.Navigator initialRouteName='PostScreen' screenOptions={{headerShown: false}}>
+      <Post.Screen name="PostScreen" component={PostScreen}/>
+      <Post.Screen name="CommentScreen" component={Comment}/>
+    </Post.Navigator>
+  )
+}
 const DrawerNavigator = () => {
+  const auth = emulators.authentication
 
   const CustomDrawerContent = (props) => {
     return (
+      <>
+      
       <DrawerContentScrollView
         showsVerticalScrollIndicator={false}
         style={{
@@ -124,8 +138,15 @@ const DrawerNavigator = () => {
           borderTopRightRadius: 12,
         }}
         {...props}>
+          {/* avatar goes here */}
+          <View style={{height: 200, borderRadius: 12, backgroundColor: '#5D626F', marginHorizontal: 10, marginBottom: 10}}>
+            {auth.currentUser && <Text>{auth.currentUser.displayName}</Text>}
+            
+            
+          </View>
         <DrawerItemList {...props} style={{}} />
       </DrawerContentScrollView>
+      </>
     )
   }
 
@@ -133,6 +154,7 @@ const DrawerNavigator = () => {
     // <PortalProvider>
     <Drawer.Navigator
       initialRouteName='Server'
+      id="Drawer"
       screenOptions={{
         drawerType: 'back',
         swipeEdgeWidth: Dimensions.get('window').width,
@@ -141,7 +163,7 @@ const DrawerNavigator = () => {
           width: '90%',
           backgroundColor: '#202225',
         },
-        // overlayColor: 'rgba(0,0,0,0)',
+        overlayColor: 'rgba(0,0,0,0)',
         // sceneContainerStyle: {
         //   paddingTop: StatusBar.currentHeight,
         //   borderRadius: 24
@@ -153,9 +175,10 @@ const DrawerNavigator = () => {
 
     >
       {/* <Stack.Screen component={SplashScreen} name="Splash" options={{headerShown: false, animation: "fade"}}/> */}
+      <Drawer.Screen component={ProfileScreen} name="Profile" options={{ headerShown: false }} />
       <Drawer.Screen component={ServerScreen} name="Server" options={{ headerShown: false }} />
       <Drawer.Screen component={Chat} name="Chat" options={{ headerShown: false }} />
-      <Drawer.Screen component={ProfileScreen} name="Profile" options={{ headerShown: false }} />
+      <Drawer.Screen component={EventsScreen} name="Events" options={{ headerShown: false }} />
     </Drawer.Navigator>
     // </PortalProvider>
   )
@@ -208,11 +231,12 @@ const App = () => {
           />
           <MainStack.Group screenOptions={{ presentation: 'modal' }}>
             <MainStack.Screen
-              name="PostScreen"
-              component={gestureHandlerRootHOC(PostScreen)}
+              name="PostStack"
+              component={gestureHandlerRootHOC(PostStack)}
               options={{
                 headerShown: false,
                 animation: 'slide_from_bottom',
+                animationDuration: 250
               }}
             />
             <MainStack.Screen
@@ -220,7 +244,8 @@ const App = () => {
               component={gestureHandlerRootHOC(NewPost)}
               options={{
                 headerShown: false,
-                animation: "slide_from_bottom"
+                animation: "slide_from_bottom",
+                animationDuration: 250
               }}
             />
           </MainStack.Group>

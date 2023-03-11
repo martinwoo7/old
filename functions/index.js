@@ -2,13 +2,6 @@ const functions = require("firebase-functions");
 const admin = require('firebase-admin')
 admin.initializeApp({ projectId: "demo-project"})
 
-exports.addMessage = functions.https.onRequest(async (req, res) => {
-    // grab text parameter
-    const original = req.query.text;
-    const writeResult = await admin.firestore().collection('messages').add({ original: original });
-    res.json({ result: `Message with ID: ${writeResult.id} added.` })
-})
-
 exports.addPost = functions.https.onRequest(async (req, res) => {
     console.log(req.query)
     const content = req.query.text;
@@ -46,16 +39,6 @@ exports.addPost = functions.https.onRequest(async (req, res) => {
     res.json({ result: `Post with ID: ${writeResult.id} added.` })
 })
 
-exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
-    .onCreate((snap, context) => {
-        const original = snap.data().original;
-        functions.logger.log('Uppercasing', context.params.documentId, original);
-
-        const uppercase = original.toUpperCase();
-
-        // Return promise for any async tast inside functions
-        return snap.ref.set({ uppercase }, { merge: true });
-    });
 
 exports.calculate = functions.firestore.document('/posts/{documentId}')
     .onCreate((snap, context) => {
