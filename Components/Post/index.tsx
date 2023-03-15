@@ -33,7 +33,7 @@ import { Portal } from '@gorhom/portal'
 import { FullWindowOverlay } from 'react-native-screens';
 
 import { handleDate } from "../../utils/algos";
-import { onSnapshot, collection, query } from "firebase/firestore";
+import { onSnapshot, collection, query, doc, where, getDocs, limit, updateDoc, increment } from "firebase/firestore";
 // ** END HOOKS IMPORT
 
 
@@ -42,20 +42,21 @@ import { onSnapshot, collection, query } from "firebase/firestore";
 // 1 - Image -> 
 // 2 - Video -> 
 
-const temp = {
-    content: "Testing content. This is a strong message and a long message",
-    createdAt: new Date(2022, 11, 30),
-    createdBy: "ufsaqZFjpdujUJSmb79l9kEAUvbN",
-    name: "Jimmy",
-    type: 0,
-    score: 0,
-    likes: 0,
-    comments: 0,
-    verb: "shouted",
-    // liked: 0
+const decrementLikes = async ( ref, numShards ) => {
+    const shardId = Math.floor(Math.random() * numShards).toString();
+    const shardRef = doc(ref, 'likes', shardId)
+    await updateDoc(shardRef, {
+        count: increment(-1)
+    })
 }
 
-// props will contain post contents
+const incrementLikes = async ( ref, numShards ) => {
+    const shardId = Math.floor(Math.random() * numShards).toString();
+    const shardRef = doc(ref, 'likes', shardId)
+    await updateDoc(shardRef, {
+        count: increment(1)
+    })
+}
 
 // export a different version of post for each post type
 // export const MessageComponent = forwardRef((props: any, ref) => {
@@ -67,54 +68,84 @@ export const MessageComponent = (props: any) => {
     const likeRef = useRef(null)
 
     const db = emulators.firestore
-    const user = emulators.authentication
+    const auth = emulators.authentication
 
-    const liked = useSharedValue(0)
-    const [heart, setHeart] = useState(liked.value == 0 ? false : true)
-
+    const liked = useSharedValue(props.new ? 1 : 0)
     const [likes, setLikes] = useState(0)
     const [comments, setComments] = useState(0)
     const options = props.options
 
     const scrollX = useSharedValue(0)
-    const { width: windowWidth } = useWindowDimensions();
 
     useEffect(() => {
-        const q = query(
-            collection(db, 'counters', props.data.id, 'shards')
-        )
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            let total_count = 0
-            snapshot.forEach((doc) => {
-                total_count += doc.data().count
+    
+        if (!props.new) {
+            const q = query(
+                collection(db, 'counters', props.data.id, 'shards')
+            )
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                let total_count = 0
+                snapshot.forEach((doc) => {
+                    total_count += doc.data().count
+                })
+                setComments(total_count)
             })
-            setComments(total_count)
-        })
-
-        commentRef.current = unsubscribe
-
-        return () => {
-            commentRef.current && commentRef.current()
-        }
+    
+            commentRef.current = unsubscribe
+    
+            return () => {
+                commentRef.current && commentRef.current()
+            }
+        } 
+        
     }, [])
 
     useEffect(() => {
-        const q = query(
-            collection(db, 'counters', props.data.id, 'likes')
-        )
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            let total_count = 0
-            snapshot.forEach((doc) => {
-                total_count += doc.data().count
+        
+
+        if (!props.new) {
+            const q = query(
+                collection(db, 'counters', props.data.id, 'likes')
+            )
+
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                let total_count = 0
+                snapshot.forEach((doc) => {
+                    total_count += doc.data().count
+                })
+                setLikes(total_count)
             })
-            setLikes(total_count)
-        })
-
-        likeRef.current = unsubscribe
-
-        return () => {
-            likeRef.current && likeRef.current()
+    
+            likeRef.current = unsubscribe
+    
+            return () => {
+                likeRef.current && likeRef.current()
+            }
+        } else {
+            setLikes(1)
         }
+        
+    }, [])
+
+    useEffect(() => {
+
+        const userLikes = async () => {
+            const q = query(
+                collection(db, 'users'),
+                where("uid", "==", auth.currentUser.uid),
+                where("likes", "array-contains", props.data.id),
+                limit(1)
+            )
+            const snapshot = await getDocs(q)
+            if (!snapshot.empty) {
+                liked.value = 1
+            }
+        }
+
+        if (!props.new) {
+            userLikes()
+        } 
+        
     }, [])
 
 
@@ -126,7 +157,8 @@ export const MessageComponent = (props: any) => {
                 }
             ]
         }
-    }, [heart])
+    }, [liked])
+
     const fillStyle = useAnimatedStyle(() => {
         return {
             transform: [
@@ -136,19 +168,14 @@ export const MessageComponent = (props: any) => {
             ],
             opacity: liked.value
         }
-    }, [heart])
+    }, [liked])
 
     const toggleLikes = (() => {
-        console.log('pressed!')
-        if (!heart) {
-            runOnJS(setLikes)(likes + 1)
-            runOnJS(setHeart)(true)
+        if (!liked.value) {
+            incrementLikes(doc(db, 'counters', props.data.id), 10)
             liked.value = withSpring(1);
         } else {
-            runOnJS(setLikes)(likes - 1)
-            // setLikes((likes) => likes - 1)
-            runOnJS(setHeart)(false)
-            // setHeart(false)
+            decrementLikes(doc(db, 'counters', props.data.id), 10)
             liked.value = withSpring(0);
         }
     })
@@ -173,7 +200,7 @@ export const MessageComponent = (props: any) => {
     }
 
     const renderEnd = () => {
-        switch (props.state || temp.type) {
+        switch (props.type) {
             // text
             case 0:
                 return (
@@ -235,7 +262,7 @@ export const MessageComponent = (props: any) => {
                             >
                                 {props.data.images.map((image, index) => {
                                     return (
-                                        <View style={{ width: 350, height: 350 }} key={index}>
+                                        <View style={{ width: 350, height: 350 }} key={image.assetId}>
                                             <Image source={{ uri: image.uri }} style={styles.card} />
                                         </View>
                                     )
@@ -244,13 +271,13 @@ export const MessageComponent = (props: any) => {
                             <View style={styles.indicatorContainer} >
                                 {props.data.images.map((image, index) => {
                                     return (
-                                        <Pagination index={index} />
+                                        <Pagination index={index} key={image.assetId}/>
                                     )
                                 })}
 
                             </View>
                         </View>
-                        : props.state === 1 ?
+                        : props.type === 1 ?
                             <>
                                 <View style={[styles.scrollContainer]}>
                                     <View style={{ width: 325, height: 300, justifyContent: 'center', alignItems: 'center', borderStyle: 'dashed', borderWidth: 1, borderRadius: 8, marginTop: 10 }}>
@@ -270,7 +297,7 @@ export const MessageComponent = (props: any) => {
                     </View>
 
                     {/* poll */}
-                    {props.state === 3 && options ?
+                    {props.type === 3 && options ?
                         <View style={styles.pollContainer}>
                             {options.map((item, index) => {
                                 return (
@@ -329,15 +356,21 @@ export const MessageComponent = (props: any) => {
                                 </Animated.View>
 
                                 <View style={{ alignItems: 'center', width: 40 }}>
-                                    {props.new ?
-                                        <Text style={{ paddingLeft: 5 }}>0</Text> :
+                                    {/* {props.new ?
+                                        <Text style={{ paddingLeft: 5 }}>1</Text> :
                                         <AnimatedNumber
                                             includeComma
                                             animateToNumber={likes}
                                             // style={{ paddingLeft: 5 }}
                                             animationDuration={500}
                                         />
-                                    }
+                                    } */}
+                                    <AnimatedNumber
+                                        includeComma
+                                        animateToNumber={likes}
+                                        // style={{ paddingLeft: 5 }}
+                                        animationDuration={500}
+                                    />
                                 </View>
                             </Animated.View>
                         </Pressable>
@@ -362,7 +395,7 @@ export const MessageComponent = (props: any) => {
                         {/* {handleDate(time)} */}
                         {props.enabled ?
                             handleDate(moment(props.data.createdAt.toDate())) :
-                            props.state !== null ?
+                            props.new ?
                                 handleDate(moment()) :
                                 handleDate(moment(props.data.createdAt.toDate()))
                         }

@@ -22,7 +22,7 @@ import { Avatar } from "@rneui/themed";
 import Comment from "../Components/Comment";
 import emulators from "../firebase";
 import moment from 'moment/moment';
-import { collection, query, getDocs, onSnapshot, orderBy, where, limit, writeBatch, doc } from "firebase/firestore";
+import { collection, query, getDocs, onSnapshot, orderBy, where, limit, writeBatch, doc, serverTimestamp } from "firebase/firestore";
 import Modal from "react-native-modal";
 
 // might have to find a way to speed up the fetching from server.
@@ -56,7 +56,7 @@ const PostScreen = ({ navigation, route }) => {
 
         const getMessages = async () => {
             const q = query(
-                collection(db, 'posts', data.id, 'comments'),
+                collection(db, 'comments'),
                 where('postId', '==', data.id),
                 // limit(50)
             )
@@ -66,22 +66,23 @@ const PostScreen = ({ navigation, route }) => {
                 if (firstRender.current) {
                     snapshot.forEach((doc) => {
                         let item = Object.assign({ id: doc.id }, doc.data())
-                        temp.push(item)
+                        temp.unshift(item)
                     })
                     firstRender.current = false
                     const result = createDataTree(temp)
                     setComments(result)
                 }
-                // else {
-                //     snapshot.docChanges().forEach((change) => {
-                //         if (change.type === 'added') {
-                //             let item = Object.assign({ id: change.doc.id }, change.doc.data())
-                //             temp.push(item)
-                //         }
-                //         const result = createDataTree(temp)
-                //         setComments(result)
-                //     })
-                // }
+                else {
+                    snapshot.docChanges().forEach((change) => {
+                        console.log("Changes registered: ", change.type, " on id ", change.doc.id)
+                        if (change.type === 'added') {
+                            let item = Object.assign({ id: change.doc.id }, change.doc.data({serverTimestamps: 'estimate'}))
+                            temp.unshift(item)
+                        }
+                        const result = createDataTree(temp)
+                        setComments(result)
+                    })
+                }
             })
             unsubRef.current = unsubscribe
         }
@@ -144,6 +145,7 @@ const PostScreen = ({ navigation, route }) => {
         const toggleExpand = () => {
             console.log("Toggled expand")
         }
+        // console.log(moment(item.createdAt.toDate()).fromNow())
         return (
 
             <Pressable

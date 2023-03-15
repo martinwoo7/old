@@ -22,7 +22,8 @@ import {
     arrayUnion,
     where,
     Timestamp,
-    writeBatch
+    writeBatch,
+    increment
 } from 'firebase/firestore';
 import emulators from "../firebase";
 
@@ -35,6 +36,14 @@ const NewPost = ({ navigation }) => {
 
     const [tags, setTags] = useState([])
     const [content, setContent] = useState('')
+
+    const incrementLikes = async ( ref, numShards ) => {
+        const shardId = Math.floor(Math.random() * numShards).toString();
+        const shardRef = doc(ref, 'likes', shardId)
+        await updateDoc(shardRef, {
+            count: increment(1)
+        })
+    }
 
     const createCounter = (ref, numShards) => {
         const batch = writeBatch(db)
@@ -85,11 +94,16 @@ const NewPost = ({ navigation }) => {
             video: video,
             tags: tags,
 
-        }).then((result) => {
+        }).then(async (result) => {
             console.log('Post successfully created with id', result.id)
             const ref = doc(db, "counters", result.id)
             createCounter(ref, 10)
+            incrementLikes(ref, 10)
             
+            await setDoc(doc(db, 'users', auth.currentUser.uid), {
+                likes: arrayUnion(result.id)
+                
+            }).then()
             navigation.goBack()
         })
 

@@ -63,7 +63,6 @@ const ServerScreen = ({ navigation, route }) => {
     const auth = emulators.authentication
 
     const [items, setItems] = useState([])
-    const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
     const [options, setOptions] = useState(null)
 
@@ -72,9 +71,6 @@ const ServerScreen = ({ navigation, route }) => {
 
     const snapPoints = useMemo(() => ['10%', '50%'], [])
 
-    // const handleSheetChanges = useCallback((index: number) => {
-    //     console.log('handlesheet', index)
-    // }, [])
 
     const toggleDrawer = () => navigation.toggleDrawer()
     const drawerProgress = useDrawerProgress();
@@ -119,7 +115,6 @@ const ServerScreen = ({ navigation, route }) => {
     }, [])
 
     const renderItem = ({ item }) => {
-        // console.log(item)
         return (
             <>
                 <MessageComponent navigation={navigation} enabled data={item} type={item.type} tags={item.tags}/>
@@ -150,7 +145,7 @@ const ServerScreen = ({ navigation, route }) => {
                             data={items}
                             renderItem={renderItem}
                             keyExtractor={item => item.content}
-                            contentContainerStyle={{ paddingBottom: 10 }}
+                            // contentContainerStyle={{ paddingBottom: 10 }}
                             // tslint:disable-next-line
                             ItemSeparatorComponent={separator}
                             style={{ marginTop: 10 }}
@@ -158,24 +153,24 @@ const ServerScreen = ({ navigation, route }) => {
                         />
                     </Animated.View>
 
-                    <View style={{ flexDirection: 'row', backgroundColor: '#202225' }}>
+                    <View style={{ flexDirection: 'row', backgroundColor: '#35393F', paddingVertical: 7}}>
 
                         <Pressable
-                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            style={{ backgroundColor: '#35393F', flex: 1, alignItems: 'center', paddingVertical: 5 }}
                             onPress={() => { filterSheetRef.current.expand() }}
                         >
                             <MaterialCommunityIcons name="filter-variant" size={ICON_SIZE} color="lightgrey" />
                         </Pressable>
 
                         <Pressable
-                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            style={{ backgroundColor: '#35393F', flex: 1, alignItems: 'center', paddingVertical: 5 }}
                             onPress={() => { navigation.navigate('NewPost') }}
                         >
                             <MaterialIcons name="add" size={ICON_SIZE} color="lightgrey" />
                         </Pressable>
 
                         <Pressable
-                            style={{ backgroundColor: '#202225', flex: 1, alignItems: 'center', paddingVertical: 5 }}
+                            style={{ backgroundColor: '#35393F', flex: 1, alignItems: 'center', paddingVertical: 5 }}
                             onPress={() => { rightSheetRef.current.expand() }}
                         >
 
@@ -246,7 +241,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#202225',
+        // backgroundColor: '#202225',
+        backgroundColor: '#35393F'
 
     },
     middlePanel: {

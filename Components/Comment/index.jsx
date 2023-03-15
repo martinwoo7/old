@@ -22,14 +22,11 @@ const Comment = ({ navigation, route }) => {
     const auth = emulators.authentication
 
     const [text, setText] = useState('')
-
-    
-
     const handlePost = async () => {
         // const batch = writeBatch(db)
         let id 
         if (postId === parentId) {
-            await addDoc(collection(db, 'posts', postId, 'comments'), {
+            await addDoc(collection(db, 'comments'), {
                 content: text,
                 createdAt: serverTimestamp(),
                 createdBy: auth.currentUser.uid,
@@ -43,7 +40,7 @@ const Comment = ({ navigation, route }) => {
                 id = msg.id
             })
         } else {
-            await addDoc(collection(db, 'posts', postId, 'comments'), {
+            await addDoc(collection(db, 'comments'), {
                 content: text,
                 createdAt: serverTimestamp(),
                 createdBy: auth.currentUser.uid,
@@ -54,11 +51,11 @@ const Comment = ({ navigation, route }) => {
                 likes: 1
             })
             .then(async (msg) => {
-                cconsole.log("Comment saved successfully with id ", msg.id)
+                console.log("Comment saved successfully with id ", msg.id)
                 id = msg.id
             })
         }
-        const ref = doc(db, 'counters', id)
+        const ref = doc(db, 'counters', postId)
 
         // There's a chance that the numShard will not be 10 and I need to change this
         incrementComment(ref, 10)

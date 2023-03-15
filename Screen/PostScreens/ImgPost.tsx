@@ -74,7 +74,7 @@ const ImgPost = ({ navigation, tags, setTags, content, setContent, handlePost })
                 {/* <Text style={{color:'lightgrey', fontSize: 24, marginLeft: 15}}>New Post</Text> */}
                 <Pressable
                 disabled={disabled}
-                onPress={() => {console.log('submit')}} 
+                onPress={() => handlePost(1, image, [])} 
                 style={{alignItems:'center', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 25 , marginLeft:'auto', backgroundColor: disabled ? '#D1B58A' : 'orange'}}
                 >
                     <Text style={{fontSize: 16, color: disabled ? 'grey': 'white'}}>Post</Text>

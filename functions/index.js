@@ -3,7 +3,6 @@ const admin = require('firebase-admin')
 admin.initializeApp({ projectId: "demo-project"})
 
 exports.addPost = functions.https.onRequest(async (req, res) => {
-    console.log(req.query)
     const content = req.query.text;
     const type = req.query.type;
     let verb

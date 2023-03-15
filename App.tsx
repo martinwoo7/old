@@ -157,20 +157,16 @@ const DrawerNavigator = () => {
       id="Drawer"
       screenOptions={{
         drawerType: 'back',
-        swipeEdgeWidth: Dimensions.get('window').width,
+        // swipeEdgeWidth: Dimensions.get('window').width,
         swipeMinDistance: 15,
         drawerStyle: {
           width: '90%',
           backgroundColor: '#202225',
         },
-        overlayColor: 'rgba(0,0,0,0)',
-        // sceneContainerStyle: {
-        //   paddingTop: StatusBar.currentHeight,
-        //   borderRadius: 24
-        // }
-
+        swipeEnabled: true,
+        swipeEdgeWidth: 20
       }}
-
+      backBehavior="history"
       drawerContent={CustomDrawerContent}
 
     >
@@ -208,7 +204,7 @@ const App = () => {
   }, [])
 
   NavigationBar.setBackgroundColorAsync('#202225');
-  // NavigationBar.setBackgroundColorAsync('rgba(0, 0, 0, 0.005)')
+  // NavigationBar.setBackgroundColorAsync('rgba(0,0,0, 0.5)')
   // NavigationBar.setButtonStyleAsync('light');
 
   return (
