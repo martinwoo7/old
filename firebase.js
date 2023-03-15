@@ -4,7 +4,15 @@ import {
   initializeFirestore,
   connectFirestoreEmulator,
 } from "firebase/firestore";
-import {connectAuthEmulator, initializeAuth, getReactNativePersistence } from "firebase/auth";
+import {
+  connectAuthEmulator, 
+  initializeAuth, 
+  getReactNativePersistence 
+} from "firebase/auth";
+import { 
+  getStorage, 
+  connectStorageEmulator,
+} from "firebase/storage";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,6 +35,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const authentication = initializeAuth(app, {persistence: getReactNativePersistence(AsyncStorage)})
 const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling:true })
+const storage = getStorage(app)
 
 if (__DEV__) {
   console.log("Switching to local Firebase instance...")
@@ -35,11 +44,10 @@ if (__DEV__) {
   connectAuthEmulator(authentication, `http://${origin}:9099/`)
   // connectAuthEmulator(authentication, `https://51a1-2604-3d08-6f7f-c300-7d02-1c55-f4be-819a.ngrok.io`)
   connectFirestoreEmulator(firestore, origin, 8080)
+  connectStorageEmulator(storage, origin, 9199)
 }
 
-const emulators = {authentication, firestore}
-// export const db = getFirestore(app)
-// connectFirestoreEmulator(db, 'localhost', 8080)
+const emulators = {authentication, firestore, storage}
 export default emulators
 
 
