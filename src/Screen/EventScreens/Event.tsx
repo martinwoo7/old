@@ -5,7 +5,7 @@ import {
     Text,
     StyleSheet,
     Alert,
-    TouchableOpacity,
+    // TouchableOpacity,
     StatusBar,
     Platform,
     TouchableWithoutFeedback,
