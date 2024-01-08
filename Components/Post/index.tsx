@@ -14,18 +14,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import emulators from "../../firebase";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Avatar } from "@rneui/themed";
-import Animated, {
-    Extrapolate,
-    interpolate,
-    runOnJS,
-    useAnimatedGestureHandler,
-    useAnimatedStyle,
-    useSharedValue,
-    withSpring,
-    withTiming,
-    useAnimatedReaction,
-    useAnimatedScrollHandler
-} from "react-native-reanimated";
+// import Animated, {
+//     Extrapolate,
+//     interpolate,
+//     runOnJS,
+//     useAnimatedGestureHandler,
+//     useAnimatedStyle,
+//     useSharedValue,
+//     withSpring,
+//     withTiming,
+//     useAnimatedReaction,
+//     useAnimatedScrollHandler
+// } from "react-native-reanimated";
 import AnimatedNumber from "react-native-animated-numbers";
 import BottomSheet from '@gorhom/bottom-sheet'
 import moment from 'moment/moment';
@@ -63,174 +63,174 @@ const incrementLikes = async ( ref, numShards ) => {
 export const MessageComponent = (props: any) => {
     // console.log(props)
 
-    const menuRef = useRef(null)
-    const commentRef = useRef(null)
-    const likeRef = useRef(null)
+    // const menuRef = useRef(null)
+    // const commentRef = useRef(null)
+    // const likeRef = useRef(null)
 
-    const db = emulators.firestore
-    const auth = emulators.authentication
+    // const db = emulators.firestore
+    // const auth = emulators.authentication
 
-    const liked = useSharedValue(props.new ? 1 : 0)
-    const [likes, setLikes] = useState(0)
-    const [comments, setComments] = useState(0)
-    const options = props.options
+    // const liked = useSharedValue(props.new ? 1 : 0)
+    // const [likes, setLikes] = useState(0)
+    // const [comments, setComments] = useState(0)
+    // const options = props.options
 
-    const scrollX = useSharedValue(0)
+    // const scrollX = useSharedValue(0)
 
-    useEffect(() => {
+    // useEffect(() => {
     
-        if (!props.new) {
-            const q = query(
-                collection(db, 'counters', props.data.id, 'shards')
-            )
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                let total_count = 0
-                snapshot.forEach((doc) => {
-                    total_count += doc.data().count
-                })
-                setComments(total_count)
-            })
+    //     if (!props.new) {
+    //         const q = query(
+    //             collection(db, 'counters', props.data.id, 'shards')
+    //         )
+    //         const unsubscribe = onSnapshot(q, (snapshot) => {
+    //             let total_count = 0
+    //             snapshot.forEach((doc) => {
+    //                 total_count += doc.data().count
+    //             })
+    //             setComments(total_count)
+    //         })
     
-            commentRef.current = unsubscribe
+    //         commentRef.current = unsubscribe
     
-            return () => {
-                commentRef.current && commentRef.current()
-            }
-        } 
+    //         return () => {
+    //             commentRef.current && commentRef.current()
+    //         }
+    //     } 
         
-    }, [])
+    // }, [])
 
-    useEffect(() => {
+    // useEffect(() => {
         
 
-        if (!props.new) {
-            const q = query(
-                collection(db, 'counters', props.data.id, 'likes')
-            )
+    //     if (!props.new) {
+    //         const q = query(
+    //             collection(db, 'counters', props.data.id, 'likes')
+    //         )
 
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                let total_count = 0
-                snapshot.forEach((doc) => {
-                    total_count += doc.data().count
-                })
-                setLikes(total_count)
-            })
+    //         const unsubscribe = onSnapshot(q, (snapshot) => {
+    //             let total_count = 0
+    //             snapshot.forEach((doc) => {
+    //                 total_count += doc.data().count
+    //             })
+    //             setLikes(total_count)
+    //         })
     
-            likeRef.current = unsubscribe
+    //         likeRef.current = unsubscribe
     
-            return () => {
-                likeRef.current && likeRef.current()
-            }
-        } else {
-            setLikes(1)
-        }
+    //         return () => {
+    //             likeRef.current && likeRef.current()
+    //         }
+    //     } else {
+    //         setLikes(1)
+    //     }
         
-    }, [])
+    // }, [])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const userLikes = async () => {
-            const q = query(
-                collection(db, 'users'),
-                where("uid", "==", auth.currentUser.uid),
-                where("likes", "array-contains", props.data.id),
-                limit(1)
-            )
-            const snapshot = await getDocs(q)
-            if (!snapshot.empty) {
-                liked.value = 1
-            }
-        }
+    //     const userLikes = async () => {
+    //         const q = query(
+    //             collection(db, 'users'),
+    //             where("uid", "==", auth.currentUser.uid),
+    //             where("likes", "array-contains", props.data.id),
+    //             limit(1)
+    //         )
+    //         const snapshot = await getDocs(q)
+    //         if (!snapshot.empty) {
+    //             liked.value = 1
+    //         }
+    //     }
 
-        if (!props.new) {
-            userLikes()
-        } 
+    //     if (!props.new) {
+    //         userLikes()
+    //     } 
         
-    }, [])
+    // }, [])
 
 
-    const outlineStyle = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP)
-                }
-            ]
-        }
-    }, [liked])
+    // const outlineStyle = useAnimatedStyle(() => {
+    //     return {
+    //         transform: [
+    //             {
+    //                 scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP)
+    //             }
+    //         ]
+    //     }
+    // }, [liked])
 
-    const fillStyle = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    scale: liked.value
-                }
-            ],
-            opacity: liked.value
-        }
-    }, [liked])
+    // const fillStyle = useAnimatedStyle(() => {
+    //     return {
+    //         transform: [
+    //             {
+    //                 scale: liked.value
+    //             }
+    //         ],
+    //         opacity: liked.value
+    //     }
+    // }, [liked])
 
-    const toggleLikes = (() => {
-        if (!liked.value) {
-            incrementLikes(doc(db, 'counters', props.data.id), 10)
-            liked.value = withSpring(1);
-        } else {
-            decrementLikes(doc(db, 'counters', props.data.id), 10)
-            liked.value = withSpring(0);
-        }
-    })
+    // const toggleLikes = (() => {
+    //     if (!liked.value) {
+    //         incrementLikes(doc(db, 'counters', props.data.id), 10)
+    //         liked.value = withSpring(1);
+    //     } else {
+    //         decrementLikes(doc(db, 'counters', props.data.id), 10)
+    //         liked.value = withSpring(0);
+    //     }
+    // })
 
-    const scrollHandler = useAnimatedScrollHandler((event) => {
-        scrollX.value = event.contentOffset.x
-    })
+    // const scrollHandler = useAnimatedScrollHandler((event) => {
+    //     scrollX.value = event.contentOffset.x
+    // })
 
-    const Pagination = ({ index }) => {
-        const width = useAnimatedStyle(() => {
-            return {
-                width: interpolate(scrollX.value,
-                    [350 * (index - 1), 350 * index, 350 * (index + 1)],
-                    [8, 16, 8],
-                    Extrapolate.CLAMP
-                )
-            }
-        })
-        return (
-            <Animated.View key={index} style={[styles.normalDot, width]} />
-        )
-    }
+    // const Pagination = ({ index }) => {
+    //     const width = useAnimatedStyle(() => {
+    //         return {
+    //             width: interpolate(scrollX.value,
+    //                 [350 * (index - 1), 350 * index, 350 * (index + 1)],
+    //                 [8, 16, 8],
+    //                 Extrapolate.CLAMP
+    //             )
+    //         }
+    //     })
+    //     return (
+    //         <Animated.View key={index} style={[styles.normalDot, width]} />
+    //     )
+    // }
 
-    const renderEnd = () => {
-        switch (props.type) {
-            // text
-            case 0:
-                return (
-                    <Text>at the world.</Text>
-                )
-            // picture
-            case 1:
-                return (
-                    <Text>for the world.</Text>
-                )
-            // video
-            case 2:
-                return (
-                    <Text>with the world.</Text>
-                )
-            case 3:
-                return (
-                    <Text>to the world.</Text>
-                )
-        }
-    }
+    // const renderEnd = () => {
+    //     switch (props.type) {
+    //         // text
+    //         case 0:
+    //             return (
+    //                 <Text>at the world.</Text>
+    //             )
+    //         // picture
+    //         case 1:
+    //             return (
+    //                 <Text>for the world.</Text>
+    //             )
+    //         // video
+    //         case 2:
+    //             return (
+    //                 <Text>with the world.</Text>
+    //             )
+    //         case 3:
+    //             return (
+    //                 <Text>to the world.</Text>
+    //             )
+    //     }
+    // }
 
 
-    const handleNavigate = (() => {
-        props.navigation.navigate('PostStack', { screen: 'PostScreen', params: { data: props.data } })
-    })
+    // const handleNavigate = (() => {
+    //     props.navigation.navigate('PostStack', { screen: 'PostScreen', params: { data: props.data } })
+    // })
 
     return (
         <>
-            <Pressable onPress={handleNavigate} disabled={!props.enabled} >
+            {/* <Pressable onPress={handleNavigate} disabled={!props.enabled} >
                 <Animated.View style={[styles.container]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }} >
 
@@ -240,7 +240,7 @@ export const MessageComponent = (props: any) => {
 
                         <Text>{' ' + props.data.verb}</Text>
 
-                        {/* tslint:disable-next-line */}
+                        
                         {props.enabled &&
                             <Pressable ref={menuRef} onPress={() => console.log('options')} disabled={!props.enabled} style={{ marginLeft: 'auto' }} >
                                 <MaterialCommunityIcons name="dots-vertical" color='lightgrey' size={24} />
@@ -296,7 +296,7 @@ export const MessageComponent = (props: any) => {
                         <View style={styles.leftArrowOverlap} />
                     </View>
 
-                    {/* poll */}
+                   
                     {props.type === 3 && options ?
                         <View style={styles.pollContainer}>
                             {options.map((item, index) => {
@@ -323,7 +323,7 @@ export const MessageComponent = (props: any) => {
                     </View>
 
 
-                    {/* tags? */}
+                   
                     <View style={{ flexDirection: 'row', marginHorizontal: 5 }}>
                         {props.tags && props.tags.length > 0 ?
                             <View style={{ marginTop: 20, flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -344,7 +344,6 @@ export const MessageComponent = (props: any) => {
 
                     </View>
 
-                    {/* container for buttons */}
                     <View style={{ marginTop: 16, marginLeft: 8, flexDirection: 'row', alignItems: 'center' }}>
                         <Pressable onPress={toggleLikes} disabled={props.new} style={{ width: 80 }}>
                             <Animated.View style={{ flexDirection: 'row', alignItems: 'center' }} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
@@ -356,15 +355,7 @@ export const MessageComponent = (props: any) => {
                                 </Animated.View>
 
                                 <View style={{ alignItems: 'center', width: 40 }}>
-                                    {/* {props.new ?
-                                        <Text style={{ paddingLeft: 5 }}>1</Text> :
-                                        <AnimatedNumber
-                                            includeComma
-                                            animateToNumber={likes}
-                                            // style={{ paddingLeft: 5 }}
-                                            animationDuration={500}
-                                        />
-                                    } */}
+                                    
                                     <AnimatedNumber
                                         includeComma
                                         animateToNumber={likes}
@@ -390,9 +381,7 @@ export const MessageComponent = (props: any) => {
 
                         </Pressable>
 
-                        {/* <Text style={{marginLeft: 'auto', marginRight: 10}}>{handleDate()}</Text> */}
-
-                        {/* {handleDate(time)} */}
+                        
                         {props.enabled ?
                             handleDate(moment(props.data.createdAt.toDate())) :
                             props.new ?
@@ -402,7 +391,7 @@ export const MessageComponent = (props: any) => {
                     </View>
 
                 </Animated.View>
-            </Pressable>
+            </Pressable> */}
         </>
     )
 }

@@ -193,7 +193,7 @@ const Profile = ({ navigation }) => {
                         onPress={() => navigation.toggleDrawer()}
                         style={{
                             position: "absolute",
-                            left: 10,
+                            left: 15,
                             zIndex: 2,
                             top: 50,
                         }}
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#D8D8D8",
     },
     header: {
-        height: HEADER_HEIGHT,
+        height: 350,
         width: "100%",
         backgroundColor: "#2196f3",
     },

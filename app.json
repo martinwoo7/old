@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "plugins": [
       [
-        "expo-image-picker", 
+        "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
@@ -34,10 +34,18 @@
         "backgroundColor": "#FFFFFF"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.anonymous.old"
+      "package": "com.anonymous.old",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "80ad4748-ed6a-45a8-b3f9-211093b65245"
+      }
     }
   }
 }

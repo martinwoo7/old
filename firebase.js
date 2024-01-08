@@ -39,7 +39,7 @@ const storage = getStorage(app)
 
 if (__DEV__) {
   console.log("Switching to local Firebase instance...")
-  const origin = Constants.manifest.debuggerHost?.split(':').shift() || 'localhost'
+  const origin = Constants.expoGoConfig.debuggerHost?.split(':').shift() || 'localhost'
   console.log("local ip is: ", origin)
   connectAuthEmulator(authentication, `http://${origin}:9099/`)
   // connectAuthEmulator(authentication, `https://51a1-2604-3d08-6f7f-c300-7d02-1c55-f4be-819a.ngrok.io`)

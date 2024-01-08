@@ -36,10 +36,10 @@ import { Avatar } from '@rneui/themed';
 import moment from 'moment/moment';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import emulators from '../firebase';
+import emulators from '../../firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Animated, { Layout, LightSpeedInLeft, LightSpeedInRight } from 'react-native-reanimated';
+// import Animated, { Layout, LightSpeedInLeft, LightSpeedInRight } from 'react-native-reanimated';
 
 // TODO: Scrolling up past a certain point will retrieve more messages
 

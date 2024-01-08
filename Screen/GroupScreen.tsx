@@ -15,13 +15,14 @@ import {
 import { Avatar } from "@rneui/themed";
 import SearchBar from "../Components/Search";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Animated, {SlideInUp, SlideInDown, Layout, LightSpeedInLeft, LightSpeedOutRight} from "react-native-reanimated";
+// import Animated, {SlideInUp, SlideInDown, Layout, LightSpeedInLeft, LightSpeedOutRight} from "react-native-reanimated";
 
 
 const Stories = ({ people, handleDelete }) => {
     const handleStories = ({item}) => {
         return (
-            <Animated.View entering={LightSpeedInLeft} exiting={LightSpeedOutRight} key={item.uid} layout={Layout.springify()}>
+            // <Animated.View entering={LightSpeedInLeft} exiting={LightSpeedOutRight} key={item.uid} layout={Layout.springify()}>
+            <View>
                 <TouchableWithoutFeedback
                     
                     onPress={() => {handleDelete(item.uid)}}
@@ -38,7 +39,8 @@ const Stories = ({ people, handleDelete }) => {
                         <Text style={{fontSize: 12}}>{item.displayName}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-            </Animated.View>
+            {/* </Animated.View> */}
+            </View>
         )
     }
     return (

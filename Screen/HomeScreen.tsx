@@ -11,7 +11,6 @@ import {
 import {addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import emulators from '../firebase';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
 
 const HomeScreen = ({ navigation }) => {
 
